@@ -10,56 +10,56 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const stages = [
   {
     id: "lead",
-    label: "Lead",
-    short: "New enquiry",
+    label: "Yhteydenotto",
+    short: "Uusi yhteydenotto",
     detail:
-      "A customer reaches out via the website form, email, or phone. Details are saved to the CRM and appear in the team queue.",
-    example: "Wedding · Anna M. · 15 Aug 2026",
+      "Asiakas ottaa yhteyttä verkkolomakkeella, sähköpostilla tai puhelimella. Tiedot tallentuvat järjestelmään ja näkyvät tiimin jonossa.",
+    example: "Häät · Anna M. · 15.8.2026",
     color: "bg-sand text-ink border-hairline",
   },
   {
     id: "offer",
-    label: "Offer",
-    short: "Offer sent",
+    label: "Tarjous",
+    short: "Tarjous lähetetty",
     detail:
-      "Offer status is tracked in the platform — no document creation, but clear status: draft, sent, accepted, or declined.",
-    example: "Mirror XL + delivery · €890",
+      "Tarjouksen tila seurataan alustalla — asiakirjoja ei luoda järjestelmässä, mutta tila on selkeä: luonnos, lähetetty, hyväksytty tai hylätty.",
+    example: "Peili XL + kuljetus · 890 €",
     color: "bg-copper-wash text-copper border-copper/20",
   },
   {
     id: "confirmed",
-    label: "Confirmed",
-    short: "Booking confirmed",
+    label: "Vahvistettu",
+    short: "Varaus vahvistettu",
     detail:
-      "Once an offer is accepted, the event is confirmed. The mirror is reserved in the calendar and shown in the availability view.",
-    example: "Mirror #3 · Hotel Kämp · 15 Aug",
+      "Kun tarjous hyväksytään, tapahtuma vahvistuu. Peili varataan kalenteriin ja näkyy saatavuusnäkymässä.",
+    example: "Peili #3 · Hotel Kämp · 15.8.",
     color: "bg-paper text-ink border-copper/30",
   },
   {
     id: "event",
-    label: "Event",
-    short: "Delivered",
+    label: "Tapahtuma",
+    short: "Toimitettu",
     detail:
-      "During and after the event, the team sees the full picture at a glance. Automations can send reminders beforehand and create follow-up tasks afterwards.",
-    example: "Wedding reception · 120 guests · Complete",
+      "Tapahtuman aikana ja jälkeen tiimillä on koko kuva yhdellä silmäyksellä. Automaatiot voivat muistuttaa etukäteen ja luoda jatkotehtäviä jälkeenpäin.",
+    example: "Hääjuhla · 120 vierasta · Valmis",
     color: "bg-verdant/10 text-verdant border-verdant/20",
   },
   {
     id: "invoicing",
-    label: "Invoicing done",
-    short: "Ready to invoice",
+    label: "Laskutus ok",
+    short: "Valmis laskutettavaksi",
     detail:
-      "The platform tracks when invoicing is complete. Actual invoice creation is handled in a separate tool — outside this project scope.",
-    example: "Marked complete · ready for external invoicing",
+      "Alusta seuraa, milloin laskutus on hoidettu. Varsinainen laskujen laatiminen tapahtuu erillisessä työkalussa — projektin ulkopuolella.",
+    example: "Merkitty valmiiksi · laskutus ulkoisessa järjestelmässä",
     color: "bg-cream text-slate border-hairline",
   },
   {
     id: "followup",
-    label: "Follow-up",
-    short: "Post-event follow-up",
+    label: "Jälkiseuranta",
+    short: "Tapahtuman jälkeinen seuranta",
     detail:
-      "Internal follow-up tasks and team notifications close the loop after each event.",
-    example: "Follow-up task created · mirror return assigned · case archived",
+      "Sisäiset jatkotehtävät ja tiimilmoitukset viimeistelevät prosessin jokaisen tapahtuman jälkeen.",
+    example: "Jatkotehtävä luotu · peilin palautus · tapaus arkistoitu",
     color: "bg-copper-wash/50 text-copper border-copper/20",
   },
 ];
@@ -74,18 +74,18 @@ export default function WorkflowPipeline() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="01"
-          eyebrow="End-to-end workflow"
+          eyebrow="Koko prosessi"
           title={
             <>
-              From first contact to event
+              Ensimmäisestä yhteydenotosta
               <br />
-              <em className="italic text-copper">and invoicing — clearly.</em>
+              <em className="italic text-copper">tapahtumaan ja laskutukseen.</em>
             </>
           }
-          description="An illustrative view of event and booking status across the journey — stages and fields can be adjusted when we meet."
+          description="Havainnollistava näkymä varauksen etenemisestä — vaiheet ja kentät voidaan tarkentaa tapaamisessa."
         />
 
-        <ClickHint className="mb-4 hidden md:flex">Click a stage to explore</ClickHint>
+        <ClickHint className="mb-4 hidden md:flex">Klikkaa vaihetta tutkiaksesi</ClickHint>
         <div className="mb-10 hidden md:block">
           <div className="relative flex items-center justify-between">
             <div className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-hairline" />
@@ -126,7 +126,7 @@ export default function WorkflowPipeline() {
             className="rounded-2xl border border-hairline bg-paper p-8 shadow-card"
           >
             <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-              Stage {String(activeIndex + 1).padStart(2, "0")} · {current.label}
+              Vaihe {String(activeIndex + 1).padStart(2, "0")} · {current.label}
             </p>
             <h3 className="mt-3 font-display text-3xl font-light text-ink">
               {current.short}
@@ -135,7 +135,7 @@ export default function WorkflowPipeline() {
               {current.detail}
             </p>
             <div className={`mt-6 rounded-xl border px-4 py-3 text-sm ${current.color}`}>
-              Example: {current.example}
+              Esimerkki: {current.example}
             </div>
           </motion.div>
 
@@ -165,14 +165,14 @@ export default function WorkflowPipeline() {
             className="rounded-2xl border border-hairline bg-paper p-7 shadow-card"
           >
             <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-              Example view · Customer status
+              Esimerkkinäkymä · Asiakkaan tila
             </p>
             <div className="mt-5 space-y-3">
               {[
-                { client: "Wedding · Mäkinen", status: "Confirmed", stage: "confirmed" },
-                { client: "Corporate event · Tech Oy", status: "Offer sent", stage: "offer" },
-                { client: "Birthday · Korhonen", status: "Event delivered", stage: "event" },
-                { client: "Trade fair · Design Week", status: "New lead", stage: "lead" },
+                { client: "Häät · Mäkinen", status: "Vahvistettu", stage: "confirmed" },
+                { client: "Yritystilaisuus · Tech Oy", status: "Tarjous lähetetty", stage: "offer" },
+                { client: "Synttärit · Korhonen", status: "Tapahtuma toimitettu", stage: "event" },
+                { client: "Messu · Design Week", status: "Uusi yhteydenotto", stage: "lead" },
               ].map((row) => (
                 <div
                   key={row.client}
@@ -188,7 +188,7 @@ export default function WorkflowPipeline() {
               ))}
             </div>
             <p className="mt-5 font-mono text-[10px] uppercase tracking-caps text-faint">
-              All customers in one view · filter and search
+              Kaikki asiakkaat yhdessä näkymässä · haku ja suodatus
             </p>
           </motion.div>
         </div>

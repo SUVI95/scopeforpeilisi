@@ -16,7 +16,7 @@ export default function Footer() {
           transition={{ duration: 0.9, ease }}
           className="font-mono text-xs uppercase tracking-caps text-copper"
         >
-          Next step
+          Seuraava askel
         </motion.p>
 
         <motion.h2
@@ -26,8 +26,8 @@ export default function Footer() {
           transition={{ duration: 1, delay: 0.1, ease }}
           className="mx-auto mt-8 max-w-3xl font-display text-4xl font-light leading-[1.12] text-ink md:text-5xl text-balance"
         >
-          Let&apos;s schedule a short call to confirm the design and features,
-          then build a platform tailored to your operations.
+          Sovitaan lyhyt tapaaminen, vahvistetaan sisältö ja ulkoasu — ja rakennetaan
+          alusta, joka tukee teidän arkea.
         </motion.h2>
 
         <motion.div
@@ -68,7 +68,7 @@ export default function Footer() {
             <div className="text-left">
               <p className="font-display text-lg text-cream">Peilisi</p>
               <p className="mt-1 text-xs text-faint">
-                Platform proposal · June 2026
+                Alustaehdotus · kesäkuu 2026
               </p>
               <p className="mt-2 text-xs text-faint/80">
                 peilisi.fi · @peilisi_fi
@@ -82,7 +82,7 @@ export default function Footer() {
               className="group flex cursor-pointer flex-col items-center gap-3"
             >
               <span className="font-mono text-[10px] uppercase tracking-caps text-faint transition-colors group-hover:text-cream/70">
-                Prepared by
+                Laatija
               </span>
               <Image
                 src="/hsbridge-logo.png"

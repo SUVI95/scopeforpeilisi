@@ -18,81 +18,81 @@ type EmailPreview = {
 const automations = [
   {
     id: "reminder",
-    title: "Pre-event reminder",
-    trigger: "24 hours before event",
-    action: "Email to assigned team member(s)",
-    timeline: ["Event in calendar", "24h before start", "Team inbox"],
+    title: "Muistutus ennen tapahtumaa",
+    trigger: "24 h ennen tapahtumaa",
+    action: "Sähköposti vastuuhenkilölle / tiimille",
+    timeline: ["Tapahtuma kalenterissa", "24 h ennen alkua", "Tiimin postilaatikko"],
     icon: ["M12 8v4l3 3", "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"],
     email: {
       to: "operations@peilisi.fi",
-      from: "Peilisi Platform <notifications@peilisi.fi>",
-      subject: "Tomorrow: Wedding · Mäkinen · Mirror #3",
+      from: "Peilisi-alusta <notifications@peilisi.fi>",
+      subject: "Huomenna: Häät · Mäkinen · Peili #3",
       body:
-        "Hi team,\n\nReminder for tomorrow:\n\nCustomer: Mäkinen family\nMirror: #3 (Classic Gold)\nLocation: Hotel Kämp\nTime: 14:00\n\nOpen event in platform →",
+        "Hei,\n\nMuistutus huomisesta tapahtumasta:\n\nAsiakas: Mäkinen\nPeili: #3 (Classic Gold)\nPaikka: Hotel Kämp\nAika: klo 14.00\n\nAvaa tapahtuma alustalla →",
       audience: "team" as const,
     },
   },
   {
     id: "followup",
-    title: "Post-event follow-up",
-    trigger: "Event marked as delivered",
-    action: "Task created + email to logistics",
-    timeline: ["Event completed", "Status updated", "Task + notification"],
+    title: "Jälkiseuranta tapahtuman jälkeen",
+    trigger: "Tapahtuma merkitty toimitetuksi",
+    action: "Tehtävä luodaan + sähköposti logistiikalle",
+    timeline: ["Tapahtuma päättynyt", "Tila päivitetty", "Tehtävä + ilmoitus"],
     icon: ["M20 7L9 18l-5-5"],
     email: {
       to: "logistics@peilisi.fi",
-      from: "Peilisi Platform <notifications@peilisi.fi>",
-      subject: "Task: Return Mirror #3 to warehouse",
+      from: "Peilisi-alusta <notifications@peilisi.fi>",
+      subject: "Tehtävä: Palauta Peili #3 varastolle",
       body:
-        "Hi logistics,\n\nEvent delivered — please schedule return:\n\nMirror: #3\nFrom: Hotel Kämp\nDue: within 48 hours\n\nMark complete in platform when done →",
+        "Hei logistiikka,\n\nTapahtuma on toimitettu — varaa palautus:\n\nPeili: #3\nPaikka: Hotel Kämp\nMääräaika: 48 h kuluessa\n\nMerkitse valmiiksi alustalla kun tehty →",
       audience: "team" as const,
     },
   },
   {
     id: "quote-follow",
-    title: "Quote follow-up",
-    trigger: "Offer sent, no reply after 3 days",
-    action: "Reminder email to sales",
-    timeline: ["Quote sent", "3 days, no change", "Sales inbox"],
+    title: "Tarjouksen seuranta",
+    trigger: "Tarjous lähetetty, ei vastausta 3 päivään",
+    action: "Muistutus myyntitiimille",
+    timeline: ["Tarjous lähetetty", "3 pv, ei muutosta", "Myynnin postilaatikko"],
     icon: ["M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"],
     email: {
       to: "sales@peilisi.fi",
-      from: "Peilisi Platform <notifications@peilisi.fi>",
-      subject: "Follow up: Tech Oy · offer still open",
+      from: "Peilisi-alusta <notifications@peilisi.fi>",
+      subject: "Seuraa: Tech Oy · tarjous yhä auki",
       body:
-        "Hi sales,\n\nTech Oy's offer has been open for 3 days with no status change.\n\nCustomer: Jari Virtanen\nEvent: Corporate gala · 15 Oct\nOffer value: €2,400\n\nView quote and follow up →",
+        "Hei myynti,\n\nTech Oyn tarjous on ollut auki 3 päivää ilman tilamuutosta.\n\nAsiakas: Jari Virtanen\nTapahtuma: Yritysgala · 15.10.\nTarjouksen arvo: 2 400 €\n\nAvaa tarjous ja ota yhteyttä →",
       audience: "team" as const,
     },
   },
   {
     id: "lead",
-    title: "New enquiry notification",
-    trigger: "Contact form submitted",
-    action: "Email + in-app alert to team",
-    timeline: ["Form on peilisi.fi", "CRM record created", "Team notified"],
+    title: "Ilmoitus uudesta yhteydenotosta",
+    trigger: "Yhteydenottolomake lähetetty",
+    action: "Sähköposti + ilmoitus alustalla tiimille",
+    timeline: ["Lomake peilisi.fi:ssä", "CRM-tietue luotu", "Tiimi ilmoitettu"],
     icon: ["M4 6h16v12H4z", "M4 8l8 5 8-5"],
     email: {
       to: "sales@peilisi.fi",
-      from: "Peilisi Platform <notifications@peilisi.fi>",
-      subject: "New enquiry: Anna Korhonen · Wedding",
+      from: "Peilisi-alusta <notifications@peilisi.fi>",
+      subject: "Uusi yhteydenotto: Anna Korhonen · Häät",
       body:
-        "New lead from the website:\n\nName: Anna Korhonen\nEvent: Wedding\nDate: 22 September\nMessage: Looking for a mirror for 120 guests…\n\nOpen in CRM →",
+        "Uusi yhteydenotto verkkosivulta:\n\nNimi: Anna Korhonen\nTapahtuma: Häät\nPäivämäärä: 22.9.\nViesti: Etsimme peiliä noin 120 vieraalle…\n\nAvaa CRM:ssä →",
       audience: "team" as const,
     },
   },
   {
     id: "thankyou",
-    title: "Post-event thank-you",
-    trigger: "Event marked complete",
-    action: "Thank-you email to customer",
-    timeline: ["Event finished", "Marked complete", "Customer inbox"],
+    title: "Kiitosviesti tapahtuman jälkeen",
+    trigger: "Tapahtuma merkitty valmiiksi",
+    action: "Kiitosviesti asiakkaalle",
+    timeline: ["Tapahtuma päättynyt", "Merkitty valmiiksi", "Asiakkaan postilaatikko"],
     icon: ["M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z", "M22 6l-10 7L2 6"],
     email: {
       to: "anna.korhonen@example.fi",
       from: "Peilisi <hello@peilisi.fi>",
-      subject: "Thank you — your event with Peilisi",
+      subject: "Kiitos — tapahtumasi Peilisen kanssa",
       body:
-        "Dear Anna,\n\nThank you for choosing Peilisi for your wedding. We hope the mirror added something special to your day.\n\nIf you have feedback or would like to book again, simply reply to this email.\n\nWarm regards,\nThe Peilisi team",
+        "Hei Anna,\n\nKiitos, että valitsitte Peilisen häihinne. Toivomme, että peili toi juhlaanne ripauksen erityistä.\n\nJos teillä on palautetta tai haluatte varata uudelleen, vastatkaa tähän viestiin.\n\nYstävällisin terveisin,\nPeilisi-tiimi",
       audience: "customer" as const,
     },
   },
@@ -100,23 +100,23 @@ const automations = [
 
 const emailTypeExamples: Record<"team" | "customer", EmailPreview & { label: string; caption: string }> = {
   team: {
-    label: "Team notification",
-    caption: "Goes to your team inbox — reminders, new leads, tasks.",
+    label: "Tiimin ilmoitus",
+    caption: "Menee tiimin postilaatikkoon — muistutukset, uudet yhteydenotot, tehtävät.",
     to: "sales@peilisi.fi",
-    from: "Peilisi Platform <notifications@peilisi.fi>",
-    subject: "New enquiry: Anna Korhonen · Wedding",
+    from: "Peilisi-alusta <notifications@peilisi.fi>",
+    subject: "Uusi yhteydenotto: Anna Korhonen · Häät",
     body:
-      "New lead from the website:\n\nName: Anna Korhonen\nEvent: Wedding · 22 Sep\n\nThe platform created a CRM record automatically. Open it to respond →",
+      "Uusi yhteydenotto verkkosivulta:\n\nNimi: Anna Korhonen\nTapahtuma: Häät · 22.9.\n\nAlusta loi CRM-tietueen automaattisesti. Avaa ja vastaa →",
     audience: "team",
   },
   customer: {
-    label: "Customer message",
-    caption: "Goes to your customer — confirmations, thank-yous, updates.",
+    label: "Asiakasviesti",
+    caption: "Menee asiakkaalle — vahvistukset, kiitosviestit, päivitykset.",
     to: "anna.korhonen@example.fi",
     from: "Peilisi <hello@peilisi.fi>",
-    subject: "Thank you — your event with Peilisi",
+    subject: "Kiitos — tapahtumasi Peilisen kanssa",
     body:
-      "Dear Anna,\n\nThank you for choosing Peilisi. We hope your event was everything you imagined.\n\nWarm regards,\nThe Peilisi team",
+      "Hei Anna,\n\nKiitos, että valitsitte Peilisen. Toivomme, että tapahtumanne oli juuri sellainen kuin toivoitte.\n\nYstävällisin terveisin,\nPeilisi-tiimi",
     audience: "customer",
   },
 };
@@ -124,30 +124,30 @@ const emailTypeExamples: Record<"team" | "customer", EmailPreview & { label: str
 const emailRoles = [
   {
     id: "hsbridge",
-    label: "HSBridge builds",
+    label: "HSBridge rakentaa",
     items: [
-      "When an email sends — triggers tied to calendar, status, or form",
-      "Sending setup and connection to your email domain",
-      "Editable subject and body fields inside the platform",
-      "Send log — what went out and when",
+      "Milloin sähköposti lähtee — laukaisimet kalenteriin, tilaan tai lomakkeeseen",
+      "Lähetyksen asetukset ja yhteys sähköpostidomainiin",
+      "Muokattavat otsikko- ja sisältökentät alustalla",
+      "Lähetysloki — mitä lähti ja milloin",
     ],
   },
   {
     id: "peilisi",
-    label: "Peilisi provides",
+    label: "Peilisi toimittaa",
     items: [
-      "Message wording — your tone, Finnish copy, brand voice",
-      "Which automations to enable",
-      "Who receives each notification",
+      "Viestien sanamuoto — teidän sävy, suomen kieli, brändi",
+      "Mitkä automaatiot otetaan käyttöön",
+      "Kuka saa kunkin ilmoituksen",
     ],
   },
   {
     id: "meeting",
-    label: "Confirm in next meeting",
+    label: "Vahvistetaan seuraavassa tapaamisessa",
     items: [
-      "Team-only emails vs customer-facing emails",
-      "How many automated emails to start with",
-      "Whether Peilisi drafts copy or adapts existing messages",
+      "Vain tiimille vs. asiakkaalle menevät viestit",
+      "Kuinka monta automaattista viestiä aloitetaan",
+      "Kirjoittaako Peilisi tekstit vai mukautetaanko olemassa olevat",
     ],
   },
 ];
@@ -190,7 +190,7 @@ function EmailMock({
         <span className="h-2.5 w-2.5 rounded-full bg-white/80 shadow-sm ring-1 ring-hairline" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/80 shadow-sm ring-1 ring-hairline" />
         <span className="ml-2 font-mono text-[9px] uppercase tracking-caps text-faint">
-          {isTeam ? "Team inbox" : "Customer inbox"}
+          {isTeam ? "Tiimin postilaatikko" : "Asiakkaan postilaatikko"}
         </span>
         <span
           className={`ml-auto rounded-full px-2 py-0.5 font-mono text-[8px] uppercase tracking-caps ${
@@ -199,23 +199,23 @@ function EmailMock({
               : "border border-copper/25 bg-copper-wash text-copper"
           }`}
         >
-          {isTeam ? "Internal" : "Customer"}
+          {isTeam ? "Sisäinen" : "Asiakas"}
         </span>
       </div>
 
       <div className={compact ? "p-4" : "p-5 md:p-6"}>
         <div className="space-y-2 border-b border-hairline pb-4">
-          <div className="flex gap-2 text-[11px]">
-            <span className="w-12 shrink-0 text-faint">From</span>
-            <span className="text-slate">{preview.from}</span>
+          <div className="flex gap-3 text-[11px]">
+            <span className="min-w-[6.5rem] shrink-0 text-faint">Lähettäjä</span>
+            <span className="min-w-0 break-words text-slate">{preview.from}</span>
           </div>
-          <div className="flex gap-2 text-[11px]">
-            <span className="w-12 shrink-0 text-faint">To</span>
-            <span className="text-slate">{preview.to}</span>
+          <div className="flex gap-3 text-[11px]">
+            <span className="min-w-[6.5rem] shrink-0 text-faint">Vastaanottaja</span>
+            <span className="min-w-0 break-words text-slate">{preview.to}</span>
           </div>
-          <div className="flex gap-2 text-[11px]">
-            <span className="w-12 shrink-0 text-faint">Subject</span>
-            <span className="font-medium text-ink">{preview.subject}</span>
+          <div className="flex gap-3 text-[11px]">
+            <span className="min-w-[6.5rem] shrink-0 text-faint">Aihe</span>
+            <span className="min-w-0 break-words font-medium text-ink">{preview.subject}</span>
           </div>
         </div>
         <p className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-slate">
@@ -223,7 +223,7 @@ function EmailMock({
         </p>
         {!compact && (
           <p className="mt-4 rounded-lg border border-copper/15 bg-copper-wash/30 px-3 py-2 text-[10px] text-slate">
-            Illustrative example — final wording supplied by Peilisi.
+            Havainnollistava esimerkki — lopullisen sanamuodon toimittaa Peilisi.
           </p>
         )}
       </div>
@@ -245,18 +245,17 @@ export default function AutomationsSpotlight() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="06"
-          eyebrow="Automations & email"
+          eyebrow="Automaatiot ja sähköposti"
           title={
             <>
-              Examples of the emails
+              Esimerkkejä viesteistä,
               <br />
-              <em className="italic text-copper">your platform can send.</em>
+              <em className="italic text-copper">joita alusta voi lähettää.</em>
             </>
           }
-          description="Illustrative previews only — team notifications and customer messages. Wording and scope are confirmed in your next meeting."
+          description="Havainnollistavia esikatseluja — tiimin ilmoitukset ja asiakasviestit. Sanamuoto ja laajuus vahvistetaan seuraavassa tapaamisessa."
         />
 
-        {/* Team vs customer email types */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -266,19 +265,19 @@ export default function AutomationsSpotlight() {
         >
           <div>
             <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-              Two types of automated email
+              Kaksi automaattisen viestin tyyppiä
             </p>
             <h3 className="mt-2 font-display text-2xl font-light text-ink">
-              Who receives the message?
+              Kenelle viesti menee?
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-slate">
-              Most automations start with internal team notifications. Customer messages — such as
-              thank-you notes or confirmations — use the same mechanism but go to your client&apos;s
-              inbox. Content and scope are confirmed in your next meeting.
+              Useimmat automaatiot alkavat sisäisillä tiimilmoituksilla. Asiakasviestit — kuten
+              kiitosviestit tai vahvistukset — käyttävät samaa mekanismia, mutta menevät asiakkaan
+              postilaatikkoon. Sisältö ja laajuus vahvistetaan seuraavassa tapaamisessa.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <ClickHint>Switch type</ClickHint>
+              <ClickHint>Vaihda tyyppiä</ClickHint>
               <div className="flex flex-wrap gap-2">
               {(["team", "customer"] as const).map((type) => (
                 <button
@@ -313,20 +312,20 @@ export default function AutomationsSpotlight() {
             <div className="mt-8 space-y-4">
               <div className="rounded-xl border border-verdant/20 bg-verdant/5 p-5">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-verdant">
-                  Typical starting point
+                  Tyypillinen aloituspiste
                 </p>
                 <p className="mt-2 text-sm text-slate">
-                  Internal notifications — reminders before events, new lead alerts, and task
-                  assignments to the team.
+                  Sisäiset ilmoitukset — muistutukset ennen tapahtumia, uudet yhteydenotot ja
+                  tehtävät tiimille.
                 </p>
               </div>
               <div className="rounded-xl border border-copper/20 bg-copper-wash/30 p-5">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-                  Customer messages
+                  Asiakasviestit
                 </p>
                 <p className="mt-2 text-sm text-slate">
-                  Thank-you emails, booking confirmations, and follow-ups — sent from your domain
-                  with wording Peilisi provides.
+                  Kiitosviestit, varausvahvistukset ja seurannat — lähetetään teidän domainista
+                  Peilisen toimittamalla sanamuodolla.
                 </p>
               </div>
             </div>
@@ -345,16 +344,15 @@ export default function AutomationsSpotlight() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Example automations with live email preview */}
         <div className="mt-16">
           <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-            Example automations · illustrative
+            Esimerkkiautomaatioita · havainnollistava
           </p>
           <h3 className="mt-2 font-display text-2xl font-light text-ink">
-            Pick an example — see the message
+            Valitse esimerkki — näe viesti
           </h3>
 
-          <ClickHint className="mt-2">Pick an example below</ClickHint>
+          <ClickHint className="mt-2">Valitse esimerkki alta</ClickHint>
 
           <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,340px)_1fr]">
             <div className="flex flex-col gap-2">
@@ -381,7 +379,7 @@ export default function AutomationsSpotlight() {
                               : "bg-copper-wash text-copper"
                           }`}
                         >
-                          {a.email.audience === "team" ? "Team" : "Customer"}
+                          {a.email.audience === "team" ? "Tiimi" : "Asiakas"}
                         </span>
                       </div>
                       <p className="mt-1 truncate text-xs text-slate">{a.email.subject}</p>
@@ -408,7 +406,6 @@ export default function AutomationsSpotlight() {
           </div>
         </div>
 
-        {/* Responsibilities */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -417,14 +414,14 @@ export default function AutomationsSpotlight() {
           className="mt-16 rounded-2xl border border-hairline bg-paper p-8 shadow-card"
         >
           <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-            Responsibilities
+            Vastuunjako
           </p>
           <h3 className="mt-2 font-display text-2xl font-light text-ink">
-            Who builds what
+            Kuka tekee mitä
           </h3>
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate">
-            HSBridge builds the technical framework — triggers, scheduling, delivery, and editable
-            fields. Peilisi provides the message wording and decides which automations to enable.
+            HSBridge rakentaa teknisen rungon — laukaisimet, ajastukset, lähetyksen ja muokattavat
+            kentät. Peilisi toimittaa viestien sanamuodon ja päättää, mitkä automaatiot otetaan käyttöön.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2">

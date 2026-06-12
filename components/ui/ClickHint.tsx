@@ -9,7 +9,7 @@ type ClickHintProps = {
 };
 
 export default function ClickHint({
-  children = "Click to explore",
+  children = "Kokeile klikkaamalla",
   className = "",
   variant = "light",
 }: ClickHintProps) {

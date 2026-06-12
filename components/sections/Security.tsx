@@ -3,44 +3,45 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const layers = [
   {
     id: "tls",
-    name: "TLS encryption",
+    name: "TLS-salaus",
     radius: 230,
     detail:
-      "All traffic between browser and server is encrypted. No data is transmitted in plain text.",
+      "Kaikki liikenne selaimen ja palvelimen välillä on salattu. Tietoja ei lähetetä avoimena.",
   },
   {
     id: "auth",
-    name: "Secure login",
+    name: "Turvallinen kirjautuminen",
     radius: 184,
     detail:
-      "Password-protected sign-in, session management, and secure sign-out.",
+      "Salasanasuojattu sisäänkirjautuminen, istunnon hallinta ja turvallinen uloskirjautuminen.",
   },
   {
     id: "rbac",
-    name: "Access control",
+    name: "Käyttöoikeudet",
     radius: 138,
     detail:
-      "Role-based permissions — each user sees only what their role allows.",
+      "Roolipohjaiset oikeudet — kukin näkee vain sen, mihin hänellä on pääsy.",
   },
   {
     id: "audit",
-    name: "Audit log",
+    name: "Lokitiedot",
     radius: 92,
     detail:
-      "Sign-ins and important changes are logged with user identity and timestamp.",
+      "Kirjautumiset ja tärkeät muutokset tallentuvat käyttäjätunnuksella ja aikaleimalla.",
   },
   {
     id: "eu",
-    name: "EU data residency",
+    name: "EU-tietojen sijainti",
     radius: 46,
     detail:
-      "Data is stored on servers within the European Union. Data does not leave EU jurisdiction.",
+      "Tiedot tallennetaan EU-alueen palvelimille. Data ei siirry EU:n ulkopuolelle.",
   },
 ];
 
@@ -57,16 +58,18 @@ export default function Security() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="10"
-          eyebrow="Security"
+          eyebrow="Tietoturva"
           title={
             <>
-              Secure access
+              Turvallinen pääsy
               <br />
-              <em className="italic text-copper">and permission control.</em>
+              <em className="italic text-copper">ja oikeuksien hallinta.</em>
             </>
           }
-          description="Secure login and permission management — customer data stays protected and only the right people have access."
+          description="Suojattu kirjautuminen ja käyttöoikeudet — asiakastiedot pysyvät turvassa ja oikeat henkilöt näkevät oikeat asiat."
         />
+
+        <ClickHint className="mb-6">Klikkaa kerrosta tai painiketta</ClickHint>
 
         <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
           <motion.div
@@ -81,7 +84,7 @@ export default function Security() {
               viewBox={`0 0 ${SIZE} ${SIZE}`}
               className="h-auto w-full"
               role="group"
-              aria-label="Security layers diagram"
+              aria-label="Tietoturvakerrokset"
             >
               <defs>
                 <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
@@ -182,7 +185,7 @@ export default function Security() {
                 className="gpu rounded-2xl border border-hairline bg-paper p-8 shadow-card"
               >
                 <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-                  Layer {String(activeIndex + 1).padStart(2, "0")} / 05
+                  Kerros {String(activeIndex + 1).padStart(2, "0")} / 05
                 </p>
                 <h3 className="mt-3 font-display text-3xl font-light text-ink">
                   {current.name}

@@ -11,15 +11,15 @@ export default function ContactFormSpotlight() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="07"
-          eyebrow="Website"
+          eyebrow="Verkkosivusto"
           title={
             <>
-              Contact form
+              Yhteydenottolomake
               <br />
-              <em className="italic text-copper">directly into the CRM.</em>
+              <em className="italic text-copper">suoraan asiakastietoihin.</em>
             </>
           }
-          description="The peilisi.fi contact form connects to the management platform — each new enquiry becomes a customer record automatically, without manual copy-paste."
+          description="peilisi.fi -sivun yhteydenottolomake liitetään hallintajärjestelmään — jokainen uusi yhteydenotto muodostaa asiakaskortin automaattisesti, ilman copy-pastea."
         />
 
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
@@ -31,16 +31,16 @@ export default function ContactFormSpotlight() {
             className="rounded-2xl border border-hairline bg-paper p-7 shadow-card"
           >
             <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-              peilisi.fi · contact form
+              peilisi.fi · yhteydenottolomake
             </p>
             <div className="mt-6 space-y-4">
               {[
-                { label: "Name", value: "Anna Mäkinen" },
-                { label: "Email", value: "anna.maki@example.fi" },
-                { label: "Phone", value: "+358 40 123 4567" },
-                { label: "Event type", value: "Wedding" },
-                { label: "Preferred date", value: "15 Aug 2026" },
-                { label: "Message", value: "We would like a mirror for our wedding..." },
+                { label: "Nimi", value: "Anna Mäkinen" },
+                { label: "Sähköposti", value: "anna.maki@example.fi" },
+                { label: "Puhelin", value: "+358 40 123 4567" },
+                { label: "Tapahtuman tyyppi", value: "Häät" },
+                { label: "Toivottu ajankohta", value: "15.8.2026" },
+                { label: "Viesti", value: "Haluaisimme peilin häihimme..." },
               ].map((field) => (
                 <div key={field.label}>
                   <label className="font-mono text-[10px] uppercase tracking-caps text-faint">
@@ -56,7 +56,7 @@ export default function ContactFormSpotlight() {
               type="button"
               className="mt-6 w-full rounded-full border border-copper/30 bg-copper-wash py-3 text-sm text-copper"
             >
-              Send enquiry
+              Lähetä yhteydenotto
             </button>
           </motion.div>
 
@@ -68,7 +68,7 @@ export default function ContactFormSpotlight() {
               transition={{ duration: 0.8, delay: 0.1, ease }}
               className="flex items-center justify-center gap-4 py-4"
             >
-              <span className="font-mono text-xs text-faint">Form</span>
+              <span className="font-mono text-xs text-faint">Lomake</span>
               <div className="flex items-center gap-2">
                 {[0, 1, 2].map((i) => (
                   <motion.span
@@ -79,7 +79,7 @@ export default function ContactFormSpotlight() {
                   />
                 ))}
               </div>
-              <span className="font-mono text-xs text-copper">CRM</span>
+              <span className="font-mono text-xs text-copper">Asiakastiedot</span>
             </motion.div>
 
             <motion.div
@@ -90,14 +90,14 @@ export default function ContactFormSpotlight() {
               className="rounded-2xl border border-copper/25 bg-copper-wash/50 p-7"
             >
               <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-                Created automatically in CRM
+                Luodaan automaattisesti järjestelmään
               </p>
               <ul className="mt-4 space-y-3 text-sm text-slate">
                 {[
-                  "New customer record with contact details",
-                  "Status: New enquiry",
-                  "Activity entry with timestamp",
-                  "Team notification (new lead)",
+                  "Uusi asiakaskortti yhteystiedoilla",
+                  "Tila: Uusi yhteydenotto",
+                  "Tapahtumamerkintä aikaleimalla",
+                  "Ilmoitus tiimille (uusi yhteydenotto)",
                 ].map((item) => (
                   <li key={item} className="flex gap-3">
                     <span
@@ -112,12 +112,13 @@ export default function ContactFormSpotlight() {
 
             <div className="rounded-2xl border border-hairline bg-paper p-6 shadow-card">
               <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                Note before implementation
+                Ennen toteutusta
               </p>
               <p className="mt-3 text-sm leading-relaxed text-slate">
-                We would first review how the current peilisi.fi website is built,
-                to confirm the technical approach. Whether and how the form connects
-                will be decided in your next meeting alongside the rest of the scope.
+                Tarkistamme ensin, miten nykyinen peilisi.fi on rakennettu, jotta
+                tekninen toteutus voidaan varmistaa. Lomakkeen liittäminen ja sen
+                tarkka toteutustapa sovitaan seuraavassa tapaamisessa muiden
+                toimintojen ohella.
               </p>
             </div>
           </div>

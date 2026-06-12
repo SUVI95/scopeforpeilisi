@@ -10,40 +10,40 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const milestones = [
   {
     id: "build",
-    label: "Build",
-    caption: "Development and integrations",
+    label: "Rakentaminen",
+    caption: "Kehitys ja integraatiot",
     icon: ["M4 21V9l8-6 8 6v12", "M9 21v-6h6v6"],
     deliverables: [
-      "Customer and contact management with activity history",
-      "Event, booking, and mirror tracking in calendar view",
-      "Quote and contract status tracking",
-      "Automations and email workflows (triggers + sending — copy from Peilisi)",
-      "Website contact form to CRM (after technical review)",
-      "Secure login and permission management",
+      "Asiakkaiden ja yhteyshenkilöiden hallinta tapahtumahistorialla",
+      "Tapahtumat, varaukset ja peilien seuranta kalenterinäkymässä",
+      "Tarjousten ja sopimusten tilaseuranta",
+      "Automaatiot ja sähköpostit (laukaisimet + lähetys — tekstit Peilisiltä)",
+      "Verkkolomakkeen liittäminen asiakastietoihin (teknisen kartoituksen jälkeen)",
+      "Turvallinen kirjautuminen ja käyttöoikeudet",
     ],
   },
   {
     id: "confirm",
-    label: "Confirm",
-    caption: "Walkthrough with the Peilisi team",
+    label: "Vahvistus",
+    caption: "Käynti läpi Peilisi-tiimin kanssa",
     icon: ["M20 7L9 18l-5-5"],
     deliverables: [
-      "Structured review of all platform areas with the team",
-      "Automations and email triggers reviewed with Peilisi-supplied wording",
-      "Roles and permissions aligned to actual workflows",
-      "Feedback round with refinements applied",
+      "Kaikkien alueiden läpikäynti tiimin kanssa",
+      "Automaatiot ja sähköpostit tarkistettu Peilisi-toimittamilla teksteillä",
+      "Roolit ja oikeudet sovitettu todelliseen työhön",
+      "Palautekierros ja tarvittavat tarkennukset",
     ],
   },
   {
     id: "handover",
-    label: "Handover",
-    caption: "The system stays with you",
+    label: "Luovutus",
+    caption: "Järjestelmä jää teille",
     icon: ["M12 3v12", "M8 11l4 4 4-4", "M5 21h14"],
     deliverables: [
-      "Production-ready system on your infrastructure",
-      "Source code, credentials, and operational instructions transferred to you",
-      "Platform code and full system owned by Peilisi Oy",
-      "15 days of testing and bug fixes after delivery",
+      "Tuotantovalmis järjestelmä teidän infrastruktuurissanne",
+      "Lähdekoodi, tunnukset ja käyttöohjeet siirretty teille",
+      "Alustan koodi ja koko järjestelmä Peilisi Oy:n omistuksessa",
+      "15 päivää testausta ja korjauksia toimituksen jälkeen",
     ],
   },
 ];
@@ -74,7 +74,7 @@ function Modal({
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label={`${milestone.label} deliverables`}
+      aria-label={`${milestone.label} — toimitukset`}
     >
       <motion.div
         initial={{ opacity: 0, y: 32, scale: 0.96 }}
@@ -87,7 +87,7 @@ function Modal({
         <div className="mb-6 flex items-start justify-between">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-              Phase · {milestone.label}
+              Vaihe · {milestone.label}
             </p>
             <h3 className="mt-2 font-display text-3xl font-light text-ink">
               {milestone.caption}
@@ -96,7 +96,7 @@ function Modal({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label="Sulje"
             className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-hairline text-slate transition-colors hover:border-copper/40 hover:text-ink"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -133,15 +133,15 @@ export default function Delivery() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="11"
-          eyebrow="Delivery"
+          eyebrow="Toteutus"
           title={
             <>
-              Build. Confirm.
+              Rakennetaan. Vahvistetaan.
               <br />
-              <em className="italic text-copper">Hand over.</em>
+              <em className="italic text-copper">Luovutetaan.</em>
             </>
           }
-          description="The platform code and full system remain yours. After delivery, 15 days of testing and bug fixes — open each phase to see detailed deliverables."
+          description="Alustan koodi ja koko järjestelmä jäävät teille. Toimituksen jälkeen 15 päivää testausta ja korjauksia — avaa vaihe nähdäksesi tarkemmat toimitukset."
         />
 
         <div className="relative">
@@ -155,7 +155,7 @@ export default function Delivery() {
             />
           </div>
 
-          <ClickHint className="mb-6 justify-center">Click a milestone for detail</ClickHint>
+          <ClickHint className="mb-6 justify-center">Klikkaa vaihetta nähdäksesi lisätiedot</ClickHint>
 
           <div className="grid gap-10 md:grid-cols-3 md:gap-8">
             {milestones.map((m, i) => (
@@ -193,7 +193,7 @@ export default function Delivery() {
                     </h3>
                     <p className="mt-1 text-sm text-slate">{m.caption}</p>
                     <p className="mt-3 font-mono text-[10px] uppercase tracking-caps text-faint transition-colors group-hover:text-copper">
-                      View deliverables
+                      Näytä toimitukset
                     </p>
                   </div>
                 </div>
@@ -210,12 +210,12 @@ export default function Delivery() {
           className="mt-12 rounded-2xl border border-copper/25 bg-copper-wash/40 p-8 text-center"
         >
           <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-            Ownership & support
+            Omistajuus ja tuki
           </p>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate">
-            We have prior experience with a similar project — we know this is
-            achievable within the business service voucher budget. The system is
-            yours to own, not rent.
+            Meillä on aiempaa kokemusta vastaavasta projektista — tiedämme, että
+            tämä on toteutettavissa yrityspalvelusetelin budjetissa. Järjestelmä
+            on teidän omistanne, ei vuokrattu palvelu.
           </p>
         </motion.div>
       </div>

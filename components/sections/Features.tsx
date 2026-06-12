@@ -10,86 +10,86 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const capabilities = [
   {
     id: "crm",
-    title: "Customers & contacts",
-    summary: "All customer data in one place with search and activity history.",
+    title: "Asiakkaat ja yhteystiedot",
+    summary: "Kaikki asiakastiedot yhdessä paikassa — haku ja tapahtumahistoria mukana.",
     scope:
-      "Customer records with contact persons, tags, notes, and chronological activity history. Search and filter by name, event type, or status. Linked to events, quotes, and mirror bookings.",
+      "Asiakaskortit yhteyshenkilöineen, tunnisteineen, muistiinpanoineen ja aikajärjestyksessä olevine tapahtumineen. Haku ja suodatus nimen, tapahtumatyypin tai tilan mukaan. Linkitys tapahtumiin, tarjouksiin ja peilivarauksiin.",
     icon: ["M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z", "M6 20v-1a6 6 0 0 1 12 0v1"],
     linkedSection: "#crm",
     featured: true,
   },
   {
     id: "pipeline",
-    title: "Event & booking status tracking",
-    summary: "From first contact to event and invoicing — clear status per customer.",
+    title: "Tapahtuma- ja varausten seuranta",
+    summary: "Ensimmäisestä yhteydenotosta tapahtumaan ja laskutukseen — selkeä tila per asiakas.",
     scope:
-      "Process stages: lead → offer → confirmed → event → invoicing done → follow-up. Each customer shows their current stage. Team queue and filtering by status.",
+      "Prosessivaiheet: yhteydenotto → tarjous → vahvistettu → tapahtuma → laskutus ok → jälkiseuranta. Jokaisella asiakkaalla näkyy nykyinen vaihe. Tiimin työjono ja suodatus tilan mukaan.",
     icon: ["M4 19V5", "M4 19h16", "M8 15l3-3 3 3 4-5"],
     linkedSection: "#pipeline",
     featured: true,
   },
   {
     id: "calendar",
-    title: "Event management & calendar",
-    summary: "Which event is when and where — connected to a calendar view.",
+    title: "Tapahtumahallinta ja kalenteri",
+    summary: "Mikä tapahtuma milloin ja missä — yhteydessä kalenterinäkymään.",
     scope:
-      "Day, week, month, and agenda views. Events linked to customer, location, and mirror. Event status and team visibility. Filter by date, customer, and status.",
+      "Päivä-, viikko-, kuukausi- ja listanäkymät. Tapahtumat linkitettynä asiakkaaseen, paikkaan ja peiliin. Tapahtuman tila ja tiimin näkyvyys. Suodatus päivämäärän, asiakkaan ja tilan mukaan.",
     icon: ["M4 6h16v14H4z", "M4 10h16", "M8 3v4", "M16 3v4"],
     linkedSection: "#calendar",
     featured: true,
   },
   {
     id: "mirrors",
-    title: "Mirror location & availability",
-    summary: "A clear overview of where each mirror is and when it is booked.",
+    title: "Peilien sijainti ja saatavuus",
+    summary: "Selkeä kuva siitä, missä kukin peili on ja milloin se on varattu.",
     scope:
-      "Mirror records: name, type, current location, status (available, booked, in use, in maintenance). Linked to calendar bookings. Timeline for upcoming and past reservations.",
+      "Peilitiedot: nimi, tyyppi, nykyinen sijainti, tila (vapaa, varattu, käytössä, huollossa). Linkitys kalenterivarauksiin. Aikajana tuleville ja menneille varauksille.",
     icon: ["M4 4h16v16H4z", "M8 8h8v8H8z"],
     linkedSection: "#mirrors",
   },
   {
     id: "quotes",
-    title: "Quote & contract tracking",
-    summary: "No document creation — clear status tracking per customer.",
+    title: "Tarjous- ja sopimusseuranta",
+    summary: "Ei dokumenttien luontia — selkeä tilaseuranta per asiakas.",
     scope:
-      "Quote and contract entries with status (draft, sent, accepted, signed, declined). Linked to customer and event. Notes and update history.",
+      "Tarjous- ja sopimusmerkinnät tiloineen (luonnos, lähetetty, hyväksytty, allekirjoitettu, hylätty). Linkitys asiakkaaseen ja tapahtumaan. Muistiinpanot ja päivityshistoria.",
     icon: ["M4 6h16v14H4z", "M8 10h8", "M8 14h5"],
     linkedSection: "#quotes",
   },
   {
     id: "automations",
-    title: "Automations",
-    summary: "Pre-event reminders and automatic follow-up tasks after events.",
+    title: "Automaatiot",
+    summary: "Muistutukset ennen tapahtumaa ja automaattiset jälkiseurannan tehtävät sen jälkeen.",
     scope:
-      "Scheduled reminders for the team before events. Automatic follow-up task after delivery (e.g. mirror return). Quote follow-up and reminders. Triggers linked to calendar and status changes.",
+      "Ajastetut muistutukset tiimille ennen tapahtumia. Automaattinen jälkiseurannan tehtävä toimituksen jälkeen (esim. peilin palautus). Tarjouksen seuranta ja muistutukset. Laukaisimet linkitettynä kalenteriin ja tilamuutoksiin.",
     icon: ["M12 2v4", "M12 18v4", "M4.93 4.93l2.83 2.83", "M16.24 16.24l2.83 2.83"],
     linkedSection: "#automations",
     featured: true,
   },
   {
     id: "email",
-    title: "Email automation",
-    summary: "Automated sends when triggers fire — team notifications and customer messages.",
+    title: "Sähköpostiautomaatio",
+    summary: "Automaattiset lähetykset laukaisimen mukaan — tiimin ilmoitukset ja asiakasviestit.",
     scope:
-      "HSBridge: triggers (calendar, status, form), sending setup, editable subject/body fields, send log. Peilisi: message wording and which automations to enable. Customer-facing emails are scoped and confirmed in your next meeting.",
+      "HSBridge: laukaisimet (kalenteri, tila, lomake), lähetyksen asetukset, muokattavat otsikko- ja sisältökentät, lähetysloki. Peilisi: viestien sanamuoto ja mitkä automaatiot otetaan käyttöön. Asiakkaalle menevät viestit määritellään ja vahvistetaan seuraavassa tapaamisessa.",
     icon: ["M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"],
     linkedSection: "#automations",
   },
   {
     id: "webform",
-    title: "Website contact form",
-    summary: "New enquiries straight into the CRM — technical review before build.",
+    title: "Verkkosivun yhteydenottolomake",
+    summary: "Uudet yhteydenotot suoraan CRM:ään — tekninen tarkistus ennen toteutusta.",
     scope:
-      "Form fields (name, contact details, event type, date, message) synced to CRM. Automatic customer record creation and team notification. Automated replies to the enquirer are confirmed in your next meeting.",
+      "Lomakekentät (nimi, yhteystiedot, tapahtumatyyppi, päivämäärä, viesti) synkronoituna CRM:ään. Automaattinen asiakastietueen luonti ja tiimin ilmoitus. Automaattiset vastaukset yhteydenottajalle vahvistetaan seuraavassa tapaamisessa.",
     icon: ["M4 6h16", "M4 12h10", "M4 18h6"],
     linkedSection: "#contact-form",
   },
   {
     id: "auth",
-    title: "Login & permissions",
-    summary: "Secure sign-in and role-based access control.",
+    title: "Kirjautuminen ja käyttöoikeudet",
+    summary: "Turvallinen sisäänkirjautuminen ja roolipohjainen pääsynhallinta.",
     scope:
-      "Secure password login. Roles and permissions (e.g. admin, sales, operations). User-specific visibility. Session management and sign-out.",
+      "Turvallinen salasanakirjautuminen. Roolit ja oikeudet (esim. ylläpito, myynti, operatiivinen). Käyttäjäkohtainen näkyvyys. Istunnon hallinta ja uloskirjautuminen.",
     icon: ["M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"],
     linkedSection: "#security",
   },
@@ -122,12 +122,12 @@ function CapabilityCard({
             ? "border-copper/30"
             : open
               ? "border-copper/40 shadow-lift"
-              : "border-hairline hover:border-copper/25 hover:shadow-lift"
+              : "border-hairline hover:border-copper/30 hover:shadow-lift"
         }`}
       >
         {isFeatured && (
           <span className="mb-4 inline-flex w-fit rounded-full border border-copper/30 bg-copper-wash px-3 py-1 font-mono text-[10px] uppercase tracking-caps text-copper">
-            Core area to discuss
+            Keskeinen keskustelualue
           </span>
         )}
 
@@ -175,7 +175,7 @@ function CapabilityCard({
             >
               <div className="mt-5 border-t border-hairline pt-5">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                  Illustrative scope
+                  Havainnollistava laajuus
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-slate">
                   {cap.scope}
@@ -186,7 +186,7 @@ function CapabilityCard({
                     onClick={(e) => e.stopPropagation()}
                     className="mt-4 inline-block cursor-pointer text-xs text-copper underline-offset-2 hover:underline"
                   >
-                    View detail section
+                    Katso tarkempi osio
                   </a>
                 )}
               </div>
@@ -195,7 +195,7 @@ function CapabilityCard({
         </AnimatePresence>
 
         <p className="mt-5 font-mono text-[10px] uppercase tracking-caps text-faint">
-          {open ? "Close" : "View scope detail"}
+          {open ? "Sulje" : "Näytä laajuus"}
         </p>
       </button>
     </motion.article>
@@ -208,18 +208,18 @@ export default function Features() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="08"
-          eyebrow="Full scope"
+          eyebrow="Koko laajuus"
           title={
             <>
-              Nine platform areas.
+              Yhdeksän aluetta.
               <br />
-              <em className="italic text-copper">Within voucher budget.</em>
+              <em className="italic text-copper">Voucher-budjetin puitteissa.</em>
             </>
           }
-          description="A summary of what we have in mind so far. Each area expands for illustration — fields can be added if something is missing, and the final design and feature set will be agreed in your next meeting."
+          description="Yhteenveto siitä, mitä olemme tähän mennessä ajatelleet. Jokainen alue avautuu havainnollistavaksi — kenttiä voidaan lisätä, jos jokin puuttuu, ja lopullinen rakenne sekä ominaisuudet sovitaan seuraavassa tapaamisessa."
         />
 
-        <ClickHint className="mb-6">Click any card for scope detail</ClickHint>
+        <ClickHint className="mb-6">Klikkaa korttia nähdäksesi laajuuden</ClickHint>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3 md:gap-6">
           {capabilities.map((c, i) => (
@@ -228,8 +228,8 @@ export default function Features() {
         </div>
 
         <p className="mt-10 text-center text-sm leading-relaxed text-slate">
-          Delivery and the 15-day testing period are covered in the Delivery section.
-          Nothing here is final until we align together in your next meeting.
+          Toimitus ja 15 päivän testausjakso käydään läpi Toimitus-osiossa.
+          Mikään tästä ei ole lopullista ennen kuin sovimme yhdessä seuraavassa tapaamisessa.
         </p>
       </div>
     </section>

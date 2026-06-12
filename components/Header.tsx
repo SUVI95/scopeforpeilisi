@@ -3,15 +3,15 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  { href: "#preview", label: "Preview" },
-  { href: "#pipeline", label: "Pipeline" },
-  { href: "#crm", label: "Customers" },
-  { href: "#calendar", label: "Calendar" },
-  { href: "#events-lifecycle", label: "Events" },
-  { href: "#mirrors", label: "Mirrors" },
-  { href: "#automations", label: "Automations" },
-  { href: "#capabilities", label: "Scope" },
-  { href: "#delivery", label: "Delivery" },
+  { href: "#preview", label: "Esikatselu" },
+  { href: "#pipeline", label: "Prosessi" },
+  { href: "#crm", label: "Asiakkaat" },
+  { href: "#calendar", label: "Kalenteri" },
+  { href: "#events-lifecycle", label: "Tapahtumat" },
+  { href: "#mirrors", label: "Peilit" },
+  { href: "#automations", label: "Automaatiot" },
+  { href: "#capabilities", label: "Sisältö" },
+  { href: "#delivery", label: "Toteutus" },
   { href: "#discovery", label: "Kysely" },
 ];
 
@@ -37,7 +37,7 @@ export default function Header() {
         <a href="#top" className="group flex items-baseline gap-2 cursor-pointer">
           <span className="font-display text-lg tracking-wide text-ink">Peilisi</span>
           <span className="font-mono text-[10px] uppercase tracking-caps text-slate transition-colors group-hover:text-copper">
-            Platform Proposal
+            Alustaehdotus
           </span>
         </a>
         <nav className="hidden items-center gap-6 lg:flex">

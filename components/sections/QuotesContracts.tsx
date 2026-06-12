@@ -10,35 +10,35 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const items = [
   {
     id: "q1",
-    type: "Quote",
-    client: "Tech Oy · Corporate event",
+    type: "Tarjous",
+    client: "Tech Oy · Yritystilaisuus",
     status: "sent" as const,
-    value: "€1,240",
-    updated: "11 Jun 2026",
+    value: "1 240 €",
+    updated: "11.6.2026",
   },
   {
     id: "q2",
-    type: "Quote",
-    client: "Mäkinen · Wedding",
+    type: "Tarjous",
+    client: "Mäkinen · Häät",
     status: "accepted" as const,
-    value: "€890",
-    updated: "12 Jun 2026",
+    value: "890 €",
+    updated: "12.6.2026",
   },
   {
     id: "s1",
-    type: "Contract",
-    client: "Design Week · Trade fair",
+    type: "Sopimus",
+    client: "Design Week · Messu",
     status: "draft" as const,
     value: "—",
-    updated: "10 Jun 2026",
+    updated: "10.6.2026",
   },
   {
     id: "s2",
-    type: "Contract",
-    client: "Korhonen · Birthday",
+    type: "Sopimus",
+    client: "Korhonen · Synttärit",
     status: "signed" as const,
-    value: "€650",
-    updated: "3 Jun 2026",
+    value: "650 €",
+    updated: "3.6.2026",
   },
 ];
 
@@ -51,11 +51,11 @@ const statusStyle = {
 };
 
 const statusLabel = {
-  draft: "Draft",
-  sent: "Sent",
-  accepted: "Accepted",
-  signed: "Signed",
-  declined: "Declined",
+  draft: "Luonnos",
+  sent: "Lähetetty",
+  accepted: "Hyväksytty",
+  signed: "Allekirjoitettu",
+  declined: "Hylätty",
 };
 
 export default function QuotesContracts() {
@@ -64,8 +64,8 @@ export default function QuotesContracts() {
 
   const filtered = items.filter((item) => {
     if (filter === "all") return true;
-    if (filter === "quote") return item.type === "Quote";
-    return item.type === "Contract";
+    if (filter === "quote") return item.type === "Tarjous";
+    return item.type === "Sopimus";
   });
 
   const active = items.find((i) => i.id === selected)!;
@@ -75,24 +75,24 @@ export default function QuotesContracts() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="05"
-          eyebrow="Quotes & contracts"
+          eyebrow="Tarjoukset ja sopimukset"
           title={
             <>
-              Status tracked clearly
+              Tila selkeästi näkyvissä
               <br />
-              <em className="italic text-copper">without a document tool.</em>
+              <em className="italic text-copper">ilman asiakirjatyökalua.</em>
             </>
           }
-          description="Quote and contract status tracking per customer — no document creation in the platform, but a clear view of where each item stands."
+          description="Tarjousten ja sopimusten tilaseuranta asiakaskohtaisesti — asiakirjoja ei luoda alustalla, mutta jokaisen kohteen vaihe on selkeästi nähtävissä."
         />
 
-        <ClickHint className="mb-4">Filter or select an item</ClickHint>
+        <ClickHint className="mb-4">Suodata tai valitse kohde</ClickHint>
         <div className="mb-6 flex flex-wrap gap-2">
           {(
             [
-              ["all", "All"],
-              ["quote", "Quotes"],
-              ["contract", "Contracts"],
+              ["all", "Kaikki"],
+              ["quote", "Tarjoukset"],
+              ["contract", "Sopimukset"],
             ] as const
           ).map(([id, label]) => (
             <button
@@ -126,7 +126,7 @@ export default function QuotesContracts() {
                 <div>
                   <p className="text-sm text-ink">{item.client}</p>
                   <p className="mt-0.5 text-xs text-slate">
-                    {item.type} · updated {item.updated}
+                    {item.type} · päivitetty {item.updated}
                   </p>
                 </div>
                 <div className="text-right">
@@ -147,7 +147,7 @@ export default function QuotesContracts() {
             className="rounded-2xl border border-hairline bg-paper p-7 shadow-card"
           >
             <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-              What the platform does · what it does not
+              Mitä alusta tekee · mitä ei
             </p>
             <h3 className="mt-2 font-display text-xl font-light text-ink">
               {active.client}
@@ -156,23 +156,22 @@ export default function QuotesContracts() {
             <div className="mt-6 space-y-4">
               <div className="rounded-lg border border-verdant/20 bg-verdant/5 px-4 py-3">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-verdant">
-                  Included
+                  Mukana
                 </p>
                 <ul className="mt-2 space-y-2 text-sm text-slate">
-                  <li>· Status: draft → sent → accepted / declined</li>
-                  <li>· Link to customer and event</li>
-                  <li>· Last update and owner</li>
-                  <li>· Notes and activity history</li>
+                  <li>· Tila: luonnos → lähetetty → hyväksytty / hylätty</li>
+                  <li>· Linkitys asiakkaaseen ja tapahtumaan</li>
+                  <li>· Viimeisin päivitys ja vastuuhenkilö</li>
+                  <li>· Muistiinpanot ja tapahtumahistoria</li>
                 </ul>
               </div>
               <div className="rounded-lg border border-hairline bg-cream/80 px-4 py-3">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                  Outside project scope
+                  Projektin ulkopuolella
                 </p>
                 <p className="mt-2 text-sm text-slate">
-                  Actual PDF quotes and contract documents are created in your
-                  existing tools — the platform tracks status, it does not
-                  replace a document tool.
+                  Varsinaiset tarjous- ja sopimusasiakirjat laaditaan nykyisillä
+                  työkaluillanne — alusta seuraa tilaa, se ei korvaa asiakirjajärjestelmää.
                 </p>
               </div>
             </div>

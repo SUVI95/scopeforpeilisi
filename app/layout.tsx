@@ -24,9 +24,9 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Peilisi — Platform Proposal",
+  title: "Peilisi — Alustaehdotus",
   description:
-    "A tailored internal management platform for Peilisi — customers, events, mirrors, automations, and email in one place.",
+    "Peilisille räätälöity hallintajärjestelmä — asiakkaat, tapahtumat, peilit, automaatiot ja sähköposti yhdessä paikassa.",
   robots: { index: false, follow: false },
 };
 
@@ -42,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+    <html lang="fi" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <body className="font-sans bg-cream text-ink">{children}</body>
     </html>
   );

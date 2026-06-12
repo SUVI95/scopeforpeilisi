@@ -8,12 +8,12 @@ import ClickHint from "@/components/ui/ClickHint";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const tabs = [
-  { id: "overview", label: "Dashboard" },
-  { id: "events", label: "Events" },
-  { id: "pipeline", label: "Pipeline" },
-  { id: "mirrors", label: "Mirrors" },
-  { id: "automations", label: "Tasks & email" },
-  { id: "form", label: "Web form" },
+  { id: "overview", label: "Hallintanäkymä" },
+  { id: "events", label: "Tapahtumat" },
+  { id: "pipeline", label: "Prosessi" },
+  { id: "mirrors", label: "Peilit" },
+  { id: "automations", label: "Tehtävät ja sähköposti" },
+  { id: "form", label: "Verkkolomake" },
 ] as const;
 
 type TabId = (typeof tabs)[number]["id"];
@@ -21,52 +21,52 @@ type TabId = (typeof tabs)[number]["id"];
 type EventTab = "upcoming" | "completed";
 
 const pipelineStages = [
-  { id: "lead", label: "Lead", color: "bg-sand" },
-  { id: "offer", label: "Offer", color: "bg-copper-wash" },
-  { id: "confirmed", label: "Confirmed", color: "bg-copper/15" },
-  { id: "event", label: "Event", color: "bg-verdant/10" },
-  { id: "invoicing", label: "Invoicing done", color: "bg-cream" },
-  { id: "followup", label: "Follow-up", color: "bg-paper" },
+  { id: "lead", label: "Yhteydenotto", color: "bg-sand" },
+  { id: "offer", label: "Tarjous", color: "bg-copper-wash" },
+  { id: "confirmed", label: "Vahvistettu", color: "bg-copper/15" },
+  { id: "event", label: "Tapahtuma", color: "bg-verdant/10" },
+  { id: "invoicing", label: "Laskutus ok", color: "bg-cream" },
+  { id: "followup", label: "Jälkiseuranta", color: "bg-paper" },
 ];
 
 const pipelineCards: Record<string, { title: string; meta: string }[]> = {
-  lead: [{ title: "Design Week enquiry", meta: "Web form · today" }],
+  lead: [{ title: "Design Week -yhteydenotto", meta: "Verkkolomake · tänään" }],
   offer: [
-    { title: "Tech Oy · corporate", meta: "Offer sent · 3 days ago" },
-    { title: "Virtanen · birthday", meta: "Draft offer" },
+    { title: "Tech Oy · yritystilaisuus", meta: "Tarjous lähetetty · 3 pv sitten" },
+    { title: "Virtanen · synttärit", meta: "Tarjousluonnos" },
   ],
-  confirmed: [{ title: "Mäkinen · wedding", meta: "Mirror #3 · 15 Aug" }],
-  event: [{ title: "Korhonen · birthday", meta: "In progress · today" }],
-  invoicing: [{ title: "Lahti corporate gala", meta: "Ready to invoice" }],
-  followup: [{ title: "Helsinki summer party", meta: "Follow-up task complete" }],
+  confirmed: [{ title: "Mäkinen · häät", meta: "Peili #3 · 15.8." }],
+  event: [{ title: "Korhonen · synttärit", meta: "Käynnissä · tänään" }],
+  invoicing: [{ title: "Lahti corporate gala", meta: "Valmis laskutettavaksi" }],
+  followup: [{ title: "Helsinki summer party", meta: "Jälkiseuranta valmis" }],
 };
 
 const upcomingEvents = [
-  { date: "15 Aug", client: "Mäkinen · wedding", mirror: "Mirror #3", status: "Confirmed" },
-  { date: "17 Aug", client: "Tech Oy · corporate", mirror: "Mirror #1", status: "Offer open" },
-  { date: "18 Aug", client: "Korhonen · birthday", mirror: "Mirror #2", status: "Event day" },
+  { date: "15.8.", client: "Mäkinen · häät", mirror: "Peili #3", status: "Vahvistettu" },
+  { date: "17.8.", client: "Tech Oy · yritystilaisuus", mirror: "Peili #1", status: "Tarjous auki" },
+  { date: "18.8.", client: "Korhonen · synttärit", mirror: "Peili #2", status: "Tapahtumapäivä" },
 ];
 
 const openOffers = [
-  { client: "Tech Oy", value: "€1,240", age: "3 days" },
-  { client: "Virtanen", value: "€650", age: "1 day" },
+  { client: "Tech Oy", value: "1 240 €", age: "3 pv" },
+  { client: "Virtanen", value: "650 €", age: "1 pv" },
 ];
 
 const mirrors = [
-  { name: "Mirror #1", status: "Booked", util: 78 },
-  { name: "Mirror #2", status: "In use", util: 92 },
-  { name: "Mirror #3", status: "Booked", util: 85 },
-  { name: "Mirror #4", status: "Available", util: 34 },
+  { name: "Peili #1", status: "Varattu", util: 78 },
+  { name: "Peili #2", status: "Käytössä", util: 92 },
+  { name: "Peili #3", status: "Varattu", util: 85 },
+  { name: "Peili #4", status: "Vapaa", util: 34 },
 ];
 
 const tasks = [
-  { type: "Reminder", text: "Pre-event check · Mäkinen wedding · tomorrow 09:00", auto: true },
-  { type: "Email", text: "Follow-up offer · Tech Oy · no reply in 3 days", auto: true },
-  { type: "Task", text: "Return Mirror #2 to warehouse · after Korhonen event", auto: true },
-  { type: "Task", text: "Follow-up complete · Helsinki summer party", auto: true },
+  { type: "Muistutus", text: "Ennakkotarkistus · Mäkinen häät · huomenna klo 09.00", auto: true },
+  { type: "Sähköposti", text: "Tarjouksen seuranta · Tech Oy · ei vastausta 3 pv", auto: true },
+  { type: "Tehtävä", text: "Palauta Peili #2 varastolle · Korhonen-tapahtuman jälkeen", auto: true },
+  { type: "Tehtävä", text: "Jälkiseuranta valmis · Helsinki summer party", auto: true },
 ];
 
-const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const weekDays = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"];
 const mirrorCalendar = [
   ["", "", "M2", "M3", "M3", "M1", "M2"],
   ["M4", "M1", "M1", "M3", "M2", "", ""],
@@ -103,8 +103,8 @@ function EventsPanel() {
       <div className="flex gap-2">
         {(
           [
-            ["upcoming", "Upcoming · 6"],
-            ["completed", `Completed · ${archiveTotal}`],
+            ["upcoming", "Tulevat · 6"],
+            ["completed", `Valmiit · ${archiveTotal}`],
           ] as const
         ).map(([id, label]) => (
           <button
@@ -125,7 +125,7 @@ function EventsPanel() {
       {eventView === "upcoming" ? (
         <div className="rounded-xl border border-hairline bg-paper p-4">
           <p className="text-[11px] text-slate">
-            Active calendar and dashboard — next events only.
+            Aktiivinen kalenteri ja hallintanäkymä — vain seuraavat tapahtumat.
           </p>
           <div className="mt-3 space-y-2">
             {upcomingEvents.map((e) => (
@@ -142,18 +142,18 @@ function EventsPanel() {
       ) : (
         <div className="rounded-xl border border-hairline bg-paper p-4">
           <p className="text-[11px] text-slate">
-            Archive — paginated list, not shown on the main dashboard.
+            Arkisto — sivutettu lista, ei näy päänäkymässä.
           </p>
           <div className="mt-3 flex gap-2">
             <div className="flex-1 rounded-md border border-hairline bg-cream/60 px-3 py-1.5 text-[10px] text-faint">
-              Search past events...
+              Hae menneitä tapahtumia...
             </div>
             <span className="rounded-md border border-hairline px-2 py-1.5 text-[10px] text-copper">
               2026
             </span>
           </div>
           <div className="mt-3 space-y-1.5">
-            {["Korhonen · birthday · Jun", "Lahti gala · May", "… +244 more"].map(
+            {["Korhonen · synttärit · kesä", "Lahti gala · touko", "… +244 muuta"].map(
               (row) => (
                 <div
                   key={row}
@@ -165,7 +165,7 @@ function EventsPanel() {
             )}
           </div>
           <p className="mt-3 font-mono text-[9px] text-faint">
-            Page 1 of 5 · 50 per page
+            Sivu 1 / 5 · 50 kerrallaan
           </p>
         </div>
       )}
@@ -177,15 +177,15 @@ function OverviewPanel() {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-3">
-        <StatCard label="Upcoming events" value="6" sub="Next 14 days" accent />
-        <StatCard label="Completed" value="247" sub="In archive · searchable" />
-        <StatCard label="Mirror utilization" value="72%" sub="Fleet average" accent />
+        <StatCard label="Tulevat tapahtumat" value="6" sub="Seuraavat 14 pv" accent />
+        <StatCard label="Valmiit" value="247" sub="Arkistossa · haettavissa" />
+        <StatCard label="Peilien käyttöaste" value="72 %" sub="Koko kaluston keskiarvo" accent />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div className="rounded-xl border border-hairline bg-paper p-4">
           <p className="font-mono text-[9px] uppercase tracking-caps text-faint">
-            Upcoming events
+            Tulevat tapahtumat
           </p>
           <div className="mt-3 space-y-2">
             {upcomingEvents.map((e) => (
@@ -209,7 +209,7 @@ function OverviewPanel() {
 
         <div className="rounded-xl border border-hairline bg-paper p-4">
           <p className="font-mono text-[9px] uppercase tracking-caps text-faint">
-            Open offers
+            Avoimet tarjoukset
           </p>
           <div className="mt-3 space-y-2">
             {openOffers.map((o) => (
@@ -227,7 +227,7 @@ function OverviewPanel() {
           </div>
 
           <p className="mt-4 font-mono text-[9px] uppercase tracking-caps text-faint">
-            Mirror utilization
+            Peilien käyttöaste
           </p>
           <div className="mt-2 space-y-2">
             {mirrors.map((m) => (
@@ -257,7 +257,7 @@ function PipelinePanel() {
   return (
     <div>
       <p className="mb-3 text-[11px] text-slate">
-        Deal and event stages — cards move between columns in the live platform.
+        Tapahtuma- ja varausvaiheet — kortit siirtyvät sarakkeiden välillä valmiassa alustassa.
       </p>
 
       {/* Mobile stage picker */}
@@ -323,7 +323,7 @@ function MirrorsPanel() {
     <div className="grid gap-4 md:grid-cols-2">
       <div className="rounded-xl border border-hairline bg-paper p-4">
         <p className="font-mono text-[9px] uppercase tracking-caps text-faint">
-          Mirror inventory
+          Peilivarasto
         </p>
         <div className="mt-3 grid grid-cols-2 gap-2">
           {mirrors.map((m) => (
@@ -340,7 +340,7 @@ function MirrorsPanel() {
 
       <div className="rounded-xl border border-hairline bg-paper p-4">
         <p className="font-mono text-[9px] uppercase tracking-caps text-faint">
-          Availability calendar
+          Saatavuuskalenteri
         </p>
         <div className="mt-3 grid grid-cols-7 gap-1">
           {weekDays.map((d) => (
@@ -362,7 +362,7 @@ function MirrorsPanel() {
           ))}
         </div>
         <p className="mt-3 text-[10px] text-slate">
-          Each cell shows which mirror is booked. Click a date to see full event details.
+          Jokainen ruutu näyttää varatun peilin. Klikkaa päivää nähdäksesi tapahtuman tiedot.
         </p>
       </div>
     </div>
@@ -374,8 +374,8 @@ function AutomationsPanel() {
     <div className="space-y-4">
       <div className="rounded-xl border border-copper/20 bg-copper-wash/30 px-4 py-3">
         <p className="text-[11px] text-ink">
-          Task reminders and team email notifications — triggers fire automatically;
-          message text supplied by Peilisi.
+          Tehtävämuistutukset ja tiimin sähköposti-ilmoitukset — laukaisimet toimivat automaattisesti;
+          viestien sanamuodon toimittaa Peilisi.
         </p>
       </div>
       <div className="space-y-2">
@@ -390,7 +390,7 @@ function AutomationsPanel() {
             <div className="min-w-0 flex-1">
               <p className="text-xs text-ink">{t.text}</p>
               {t.auto && (
-                <p className="mt-0.5 text-[10px] text-faint">Automated</p>
+                <p className="mt-0.5 text-[10px] text-faint">Automaattinen</p>
               )}
             </div>
           </div>
@@ -407,13 +407,13 @@ function FormPanel() {
     <div className="grid gap-4 md:grid-cols-2">
       <div className="rounded-xl border border-hairline bg-paper p-4">
         <p className="font-mono text-[9px] uppercase tracking-caps text-faint">
-          peilisi.fi · contact form
+          peilisi.fi · yhteydenottolomake
         </p>
         <div className="mt-3 space-y-2">
           {[
-            ["Name", "Anna Korhonen"],
-            ["Email", "anna@example.fi"],
-            ["Event", "Wedding · 22 Sep"],
+            ["Nimi", "Anna Korhonen"],
+            ["Sähköposti", "anna@example.fi"],
+            ["Tapahtuma", "Häät · 22.9."],
           ].map(([label, value]) => (
             <div key={label}>
               <p className="text-[9px] text-faint">{label}</p>
@@ -428,11 +428,11 @@ function FormPanel() {
           onClick={() => setSubmitted(true)}
           className="mt-4 w-full cursor-pointer rounded-lg border border-copper/30 bg-copper-wash py-2 text-xs text-copper transition-colors hover:border-copper"
         >
-          Simulate submission
+          Simuloi lähetys
         </button>
         {!submitted && (
           <ClickHint className="mt-3 justify-center w-full">
-            Click to see the flow
+            Klikkaa nähdäksesi miten se toimii
           </ClickHint>
         )}
       </div>
@@ -447,15 +447,15 @@ function FormPanel() {
           className="rounded-xl border border-hairline bg-paper p-4"
         >
           <p className="font-mono text-[9px] uppercase tracking-caps text-copper">
-            CRM · new lead
+            CRM · uusi yhteydenotto
           </p>
           {submitted ? (
             <div className="mt-3 space-y-2">
               {[
-                "Customer record created",
-                "Stage set to Lead",
-                "Activity logged with timestamp",
-                "Team notification sent",
+                "Asiakastietue luotu",
+                "Vaihe: Yhteydenotto",
+                "Tapahtuma kirjattu aikaleimalla",
+                "Tiimin ilmoitus lähetetty",
               ].map((item) => (
                 <div key={item} className="flex gap-2 text-xs text-slate">
                   <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-verdant" />
@@ -463,12 +463,12 @@ function FormPanel() {
                 </div>
               ))}
               <div className="mt-3 rounded-lg border border-verdant/20 bg-verdant/5 px-3 py-2 text-[11px] text-verdant">
-                Anna Korhonen · Wedding · Lead
+                Anna Korhonen · Häät · Yhteydenotto
               </div>
             </div>
           ) : (
             <p className="mt-3 text-xs text-slate">
-              Submit the form to see how a website enquiry flows into the CRM as a new lead.
+              Lähetä lomake nähdäksesi, miten verkkosivun yhteydenotto päätyy CRM:ään.
             </p>
           )}
         </motion.div>
@@ -494,19 +494,19 @@ export default function DashboardPreview() {
     <section id="preview" className="relative bg-sand px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
-          index="Preview"
-          eyebrow="Concept preview"
+          index="Esikatselu"
+          eyebrow="Konseptiesikatselu"
           title={
             <>
-              An idea of how it
+              Aavistus siitä, miltä se
               <br />
-              <em className="italic text-copper">could look and work.</em>
+              <em className="italic text-copper">voisi näyttää ja toimia.</em>
             </>
           }
-          description="An illustrative preview — not a final design. Fields, layout, and workflows shown here may be added, removed, or refined. The final design and feature set will be confirmed in your next meeting."
+          description="Havainnollistava esikatselu — ei lopullinen ulkoasu. Kentät, asettelu ja työnkulut voivat muuttua tai tarkentua. Lopullinen rakenne ja ominaisuudet vahvistetaan seuraavassa tapaamisessa."
         />
 
-        <ClickHint className="mb-6">Interactive preview — click around to explore</ClickHint>
+        <ClickHint className="mb-6">Interaktiivinen esikatselu — klikkaile ja tutki</ClickHint>
 
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -528,7 +528,7 @@ export default function DashboardPreview() {
               </span>
             </div>
             <span className="font-mono text-[9px] uppercase tracking-caps text-copper-light">
-              Preview
+              Esikatselu
             </span>
           </div>
 
@@ -537,10 +537,10 @@ export default function DashboardPreview() {
             <aside className="border-b border-white/10 bg-[#141014] p-4 lg:w-52 lg:border-b-0 lg:border-r">
               <p className="font-display text-sm text-cream">Peilisi</p>
               <p className="font-mono text-[9px] uppercase tracking-caps text-white/30">
-                Operations
+                Operatiivinen
               </p>
               <ClickHint variant="dark" className="mt-4">
-                Try the menu tabs
+                Kokeile valikkoa
               </ClickHint>
               <nav className="mt-3 flex flex-row gap-1 overflow-x-auto lg:flex-col lg:gap-0.5">
                 {tabs.map((t) => (
@@ -568,16 +568,16 @@ export default function DashboardPreview() {
                     {tabs.find((t) => t.id === tab)?.label}
                   </p>
                   <h3 className="font-display text-xl font-light text-ink">
-                    {tab === "overview" && "Operations overview"}
-                    {tab === "events" && "Upcoming & completed events"}
-                    {tab === "pipeline" && "Deal & event pipeline"}
-                    {tab === "mirrors" && "Mirror inventory & calendar"}
-                    {tab === "automations" && "Reminders & follow-up email"}
-                    {tab === "form" && "Website form → CRM"}
+                    {tab === "overview" && "Operatiivinen yhteenveto"}
+                    {tab === "events" && "Tulevat ja valmiit tapahtumat"}
+                    {tab === "pipeline" && "Tapahtuma- ja varausprosessi"}
+                    {tab === "mirrors" && "Peilivarasto ja kalenteri"}
+                    {tab === "automations" && "Muistutukset ja seurantasähköpostit"}
+                    {tab === "form" && "Verkkolomake → CRM"}
                   </h3>
                 </div>
                 <span className="hidden rounded-full border border-hairline bg-paper px-2.5 py-1 font-mono text-[9px] text-faint sm:inline">
-                  Illustrative only
+                  Havainnollistava
                 </span>
               </div>
 
@@ -604,12 +604,11 @@ export default function DashboardPreview() {
           className="mt-8 rounded-2xl border border-copper/20 bg-copper-wash/30 px-6 py-5 text-center"
         >
           <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-            Before we build
+            Ennen toteutusta
           </p>
           <p className="mx-auto mt-2 max-w-2xl text-sm leading-relaxed text-slate">
-            Missing a field or step? It can be added. This preview shows the
-            direction of travel — final design, data fields, and features will
-            be set together in your next meeting.
+            Puuttuuko kenttä tai vaihe? Se voidaan lisätä. Tämä esikatselu näyttää suunnan —
+            lopullinen ulkoasu, tiedot ja ominaisuudet sovitaan yhdessä seuraavassa tapaamisessa.
           </p>
         </motion.div>
 
@@ -622,36 +621,36 @@ export default function DashboardPreview() {
 const capabilityCards = [
   {
     id: "pipeline",
-    title: "Sales & event pipeline",
-    description: "Every customer moves through clear stages — from first contact to follow-up.",
+    title: "Myynti- ja tapahtumaprosessi",
+    description: "Jokainen asiakas etenee selkeissä vaiheissa — ensimmäisestä yhteydenotosta jälkiseurantaan.",
     href: "#pipeline",
     span: "lg:col-span-3",
   },
   {
     id: "dashboard",
-    title: "Operations dashboard",
-    description: "Events, open offers, and mirror utilization at a glance.",
+    title: "Operatiivinen hallintanäkymä",
+    description: "Tapahtumat, avoimet tarjoukset ja peilien käyttöaste yhdellä silmäyksellä.",
     href: "#preview",
     span: "",
   },
   {
     id: "mirrors",
-    title: "Mirror inventory & calendar",
-    description: "Which mirror is booked, free, or in transit — on a shared calendar.",
+    title: "Peilivarasto ja kalenteri",
+    description: "Mikä peili on varattu, vapaa tai matkalla — yhteisessä kalenterissa.",
     href: "#mirrors",
     span: "",
   },
   {
     id: "automations",
-    title: "Tasks & email automation",
-    description: "Reminders and follow-ups sent automatically when triggers fire.",
+    title: "Tehtävät ja sähköpostiautomaatio",
+    description: "Muistutukset ja seurannat lähtevät automaattisesti laukaisimen mukaan.",
     href: "#automations",
     span: "",
   },
   {
     id: "form",
-    title: "Website form → CRM",
-    description: "Enquiries from peilisi.fi land as customer records — no copy-paste.",
+    title: "Verkkolomake → CRM",
+    description: "Yhteydenotot peilisi.fi:stä asiakastietueiksi — ilman copy-pastea.",
     href: "#contact-form",
     span: "md:col-span-2 lg:col-span-3",
   },
@@ -698,9 +697,9 @@ function PipelineMiniVisual() {
 
 function DashboardMiniVisual() {
   const stats = [
-    { label: "Upcoming events", value: "12", accent: "text-ink" },
-    { label: "Open offers", value: "5", accent: "text-copper" },
-    { label: "Mirror use", value: "78%", accent: "text-verdant" },
+    { label: "Tulevat tapahtumat", value: "12", accent: "text-ink" },
+    { label: "Avoimet tarjoukset", value: "5", accent: "text-copper" },
+    { label: "Peilien käyttö", value: "78 %", accent: "text-verdant" },
   ];
   return (
     <div className="mt-4 grid grid-cols-3 gap-2">
@@ -723,9 +722,9 @@ function MirrorsMiniVisual() {
   return (
     <div className="mt-4">
       <div className="flex items-center justify-between">
-        <p className="font-mono text-[8px] uppercase tracking-caps text-faint">June</p>
+        <p className="font-mono text-[8px] uppercase tracking-caps text-faint">Kesäkuu</p>
         <span className="rounded-full border border-copper/20 bg-copper-wash px-2 py-0.5 text-[8px] text-copper">
-          Mirror #3 · booked
+          Peili #3 · varattu
         </span>
       </div>
       <div className="mt-2 grid grid-cols-7 gap-1">
@@ -750,8 +749,8 @@ function AutomationsMiniVisual() {
   return (
     <div className="mt-4 space-y-2">
       {[
-        { tag: "Auto", text: "Reminder · Wedding tomorrow · Mirror #3" },
-        { tag: "Auto", text: "New lead · Anna Korhonen · Wedding" },
+        { tag: "Auto", text: "Muistutus · Häät huomenna · Peili #3" },
+        { tag: "Auto", text: "Uusi yhteydenotto · Anna Korhonen · Häät" },
       ].map((item) => (
         <div
           key={item.text}
@@ -784,7 +783,7 @@ function FormMiniVisual() {
       <div className="flex-1 rounded-xl border border-verdant/20 bg-verdant/5 p-3">
         <p className="font-mono text-[7px] uppercase tracking-caps text-verdant">CRM</p>
         <p className="mt-2 text-[10px] font-medium text-ink">Anna Korhonen</p>
-        <p className="mt-0.5 text-[9px] text-slate">Wedding · Lead · just now</p>
+        <p className="mt-0.5 text-[9px] text-slate">Häät · Yhteydenotto · juuri nyt</p>
       </div>
     </div>
   );
@@ -815,12 +814,12 @@ function CapabilityHighlights() {
       className="mt-10"
     >
       <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-        What the platform covers
+        Mitä alusta kattaa
       </p>
       <h3 className="mt-2 font-display text-2xl font-light text-ink md:text-3xl">
-        Five connected areas, one place to work
+        Viisi yhteen liittyvää aluetta, yksi työpiste
       </h3>
-      <ClickHint className="mt-3">Click a card to jump to that section</ClickHint>
+      <ClickHint className="mt-3">Klikkaa korttia siirtyäksesi kohtaan</ClickHint>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {capabilityCards.map((card, index) => (

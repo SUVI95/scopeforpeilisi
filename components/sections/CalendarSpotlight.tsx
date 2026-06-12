@@ -10,54 +10,60 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const weekEvents = [
   {
     id: "thu",
-    day: "Thu",
-    date: "15 Aug",
-    label: "Wedding · Mäkinen",
+    day: "To",
+    date: "15.8.",
+    label: "Häät · Mäkinen",
     location: "Hotel Kämp, Helsinki",
-    mirror: "Mirror #3 · XL",
-    status: "Confirmed",
+    mirror: "Peili #3 · XL",
+    status: "Vahvistettu",
   },
   {
     id: "sat",
-    day: "Sat",
-    date: "17 Aug",
-    label: "Corporate event · Tech Oy",
+    day: "La",
+    date: "17.8.",
+    label: "Yritystilaisuus · Tech Oy",
     location: "Messukeskus, Helsinki",
-    mirror: "Mirror #1 · Classic",
-    status: "Quote pending",
+    mirror: "Peili #1 · Classic",
+    status: "Tarjous odottaa",
   },
   {
     id: "sun",
-    day: "Sun",
-    date: "18 Aug",
-    label: "Birthday · Korhonen",
-    location: "Private venue · Vantaa",
-    mirror: "Mirror #2 · Compact",
-    status: "Delivered",
+    day: "Su",
+    date: "18.8.",
+    label: "Synttärit · Korhonen",
+    location: "Yksityistila · Vantaa",
+    mirror: "Peili #2 · Compact",
+    status: "Toimitettu",
   },
 ];
 
-const views = ["Day", "Week", "Month", "Agenda"];
+const views = [
+  { id: "Day", label: "Päivä" },
+  { id: "Week", label: "Viikko" },
+  { id: "Month", label: "Kuukausi" },
+  { id: "Agenda", label: "Lista" },
+];
 
 export default function CalendarSpotlight() {
   const [selected, setSelected] = useState("thu");
   const [view, setView] = useState("Week");
   const active = weekEvents.find((e) => e.id === selected)!;
+  const viewLabel = views.find((v) => v.id === view)?.label ?? view;
 
   return (
     <section id="calendar" className="relative bg-sand px-6 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="03"
-          eyebrow="Calendar"
+          eyebrow="Kalenteri"
           title={
             <>
-              Events and bookings
+              Tapahtumat ja varaukset
               <br />
-              <em className="italic text-copper">in one calendar view.</em>
+              <em className="italic text-copper">samassa kalenterissa.</em>
             </>
           }
-          description="Event management and calendar view — see immediately which event is when and where, linked to customer records and mirror reservations."
+          description="Tapahtumien hallinta ja kalenterinäkymä — näette heti, mikä tapahtuma on milloin ja missä, linkitettynä asiakastietoihin ja peilivarauksiin."
         />
 
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
@@ -71,29 +77,29 @@ export default function CalendarSpotlight() {
             <div className="mb-6 flex items-baseline justify-between">
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                  Calendar view · {view}
+                  Kalenterinäkymä · {viewLabel}
                 </p>
                 <p className="mt-1 font-display text-xl font-light text-ink">
-                  August 2026
+                  Elokuu 2026
                 </p>
               </div>
               <div className="flex gap-1.5">
                 {views.map((v) => (
                   <button
-                    key={v}
+                    key={v.id}
                     type="button"
-                    onClick={() => setView(v)}
+                    onClick={() => setView(v.id)}
                     className={`cursor-pointer rounded-full px-2.5 py-1 text-[10px] transition-colors ${
-                      view === v ? "bg-copper-wash text-copper" : "text-faint hover:text-slate"
+                      view === v.id ? "bg-copper-wash text-copper" : "text-faint hover:text-slate"
                     }`}
                   >
-                    {v}
+                    {v.label}
                   </button>
                 ))}
               </div>
             </div>
 
-            <ClickHint className="mb-4">Click an event in the week</ClickHint>
+            <ClickHint className="mb-4">Valitse tapahtuma viikolta</ClickHint>
 
             <div className="flex flex-col gap-3">
               {weekEvents.map((ev, i) => (
@@ -134,26 +140,26 @@ export default function CalendarSpotlight() {
               className="rounded-2xl border border-copper/25 bg-copper-wash/50 p-7"
             >
               <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-                Selected event
+                Valittu tapahtuma
               </p>
               <h3 className="mt-2 font-display text-2xl font-light text-ink">
                 {active.label}
               </h3>
               <ul className="mt-5 space-y-3 text-sm text-slate">
                 <li className="flex gap-3">
-                  <span className="font-mono text-xs text-faint">Date</span>
+                  <span className="font-mono text-xs text-faint">Päivä</span>
                   {active.day} {active.date}
                 </li>
                 <li className="flex gap-3">
-                  <span className="font-mono text-xs text-faint">Location</span>
+                  <span className="font-mono text-xs text-faint">Paikka</span>
                   {active.location}
                 </li>
                 <li className="flex gap-3">
-                  <span className="font-mono text-xs text-faint">Mirror</span>
+                  <span className="font-mono text-xs text-faint">Peili</span>
                   {active.mirror}
                 </li>
                 <li className="flex gap-3">
-                  <span className="font-mono text-xs text-faint">Status</span>
+                  <span className="font-mono text-xs text-faint">Tila</span>
                   {active.status}
                 </li>
               </ul>
@@ -161,14 +167,14 @@ export default function CalendarSpotlight() {
 
             <div className="rounded-2xl border border-hairline bg-paper p-7 shadow-card">
               <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                What the calendar does
+                Mitä kalenteri tekee
               </p>
               <ul className="mt-4 flex flex-col gap-3">
                 {[
-                  "Shows all events in day, week, and month views",
-                  "Links each event to customer, location, and mirror",
-                  "Displays booking status clearly for the whole team",
-                  "Powers automations (reminders, follow-up tasks)",
+                  "Näyttää kaikki tapahtumat päivä-, viikko- ja kuukausinäkymissä",
+                  "Linkittää tapahtuman asiakkaaseen, paikkaan ja peiliin",
+                  "Näyttää varauksen tilan selkeästi koko tiimille",
+                  "Toimii automaatioiden pohjana (muistutukset, jatkotehtävät)",
                 ].map((item) => (
                   <li key={item} className="flex gap-3 text-sm text-slate">
                     <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-copper" />

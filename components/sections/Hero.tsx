@@ -36,8 +36,6 @@ function CountUp({
   return <span>{value}</span>;
 }
 
-const ease = [0.22, 1, 0.36, 1] as const;
-
 export default function Hero() {
   const [ready, setReady] = useState(false);
 
@@ -73,20 +71,19 @@ export default function Hero() {
 
       <div className="relative z-10 mx-auto max-w-5xl px-6 pt-24 text-center">
         <p className="font-mono text-xs uppercase tracking-caps text-copper">
-          Proposal for Peilisi
+          Ehdotus Peilisille
         </p>
 
         <h1 className="mt-8 font-display text-5xl font-light leading-[1.06] text-ink md:text-7xl lg:text-[5.25rem] text-balance">
-          Customers, events, and mirrors
+          Asiakkaat, tapahtumat ja peilit
           <br />
-          <em className="italic text-copper">in one internal platform.</em>
+          <em className="italic text-copper">yhdessä hallintajärjestelmässä.</em>
         </h1>
 
         <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-slate md:text-lg">
-          A tailored management platform bringing customer records, events,
-          bookings, mirror availability, and automations into one place —
-          designed for the Peilisi team&apos;s day-to-day work. The platform code
-          and full system remain yours after delivery.
+          Räätälöity alusta, jossa asiakastiedot, tapahtumat, varaukset, peilien
+          saatavuus ja automaatiot ovat samassa näkymässä — suunniteltu Peilisi-tiimin
+          arkeen. Toimituksen jälkeen koodi ja koko järjestelmä jäävät teille.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -117,7 +114,7 @@ export default function Hero() {
               <CountUp to={9} />
             </div>
             <div className="mt-1 font-mono text-[10px] uppercase tracking-caps text-slate">
-              Areas to discuss
+              Keskusteltavaa aluetta
             </div>
           </div>
           <div className="h-14 w-px bg-hairline" aria-hidden />
@@ -126,14 +123,14 @@ export default function Hero() {
               <CountUp to={15} delay={1600} duration={900} />
             </div>
             <div className="mt-1 font-mono text-[10px] uppercase tracking-caps text-slate">
-              Days of testing
+              Päivää testausta
             </div>
           </div>
         </div>
 
         <p className="mx-auto mt-10 max-w-lg text-xs leading-relaxed text-faint">
-          An illustrative overview for discussion. Fields, design, and features
-          will be confirmed in your next meeting before development begins.
+          Tämä on havainnollistava ehdotus keskustelua varten. Kentät, ulkoasu ja
+          toiminnot vahvistetaan seuraavassa tapaamisessa ennen varsinaista toteutusta.
         </p>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -141,7 +138,7 @@ export default function Hero() {
             href="#preview"
             className="group inline-flex cursor-pointer items-center gap-3 rounded-full border border-copper/30 bg-paper px-8 py-4 text-sm tracking-wide text-ink shadow-card transition-all duration-300 hover:border-copper hover:shadow-lift"
           >
-            Explore dashboard preview
+            Katso hallintanäkymä
             <span className="text-copper transition-transform duration-300 group-hover:translate-y-0.5">
               ↓
             </span>
@@ -150,7 +147,7 @@ export default function Hero() {
             href="#pipeline"
             className="inline-flex cursor-pointer items-center gap-2 text-sm text-slate transition-colors hover:text-copper"
           >
-            Full proposal scope
+            Koko ehdotuksen sisältö
             <span>→</span>
           </a>
         </div>
@@ -162,7 +159,7 @@ export default function Hero() {
           className="pointer-events-none absolute inset-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         />
       )}
 

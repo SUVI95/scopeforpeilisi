@@ -10,31 +10,31 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const mirrors = [
   {
     id: "m1",
-    name: "Mirror #1 · Classic",
-    location: "Warehouse · Helsinki",
+    name: "Peili #1 · Classic",
+    location: "Varasto · Helsinki",
     status: "available" as const,
-    next: "17 Aug · Tech Oy",
+    next: "17.8. · Tech Oy",
   },
   {
     id: "m2",
-    name: "Mirror #2 · Compact",
-    location: "In transit",
+    name: "Peili #2 · Compact",
+    location: "Kuljetuksessa",
     status: "booked" as const,
-    next: "18 Aug · Korhonen",
+    next: "18.8. · Korhonen",
   },
   {
     id: "m3",
-    name: "Mirror #3 · XL",
+    name: "Peili #3 · XL",
     location: "Hotel Kämp",
     status: "in_use" as const,
-    next: "16 Aug · return",
+    next: "16.8. · palautus",
   },
   {
     id: "m4",
-    name: "Mirror #4 · Classic",
-    location: "In maintenance",
+    name: "Peili #4 · Classic",
+    location: "Huollossa",
     status: "unavailable" as const,
-    next: "22 Aug · available",
+    next: "22.8. · vapaa",
   },
 ];
 
@@ -46,10 +46,10 @@ const statusStyle = {
 };
 
 const statusLabel = {
-  available: "Available",
-  booked: "Booked",
-  in_use: "In use at event",
-  unavailable: "Unavailable",
+  available: "Vapaa",
+  booked: "Varattu",
+  in_use: "Tapahtumassa",
+  unavailable: "Ei käytössä",
 };
 
 export default function MirrorInventory() {
@@ -61,18 +61,18 @@ export default function MirrorInventory() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="04"
-          eyebrow="Mirror inventory"
+          eyebrow="Peilivarasto"
           title={
             <>
-              Location and availability
+              Sijainti ja saatavuus
               <br />
-              <em className="italic text-copper">at a glance.</em>
+              <em className="italic text-copper">yhdellä silmäyksellä.</em>
             </>
           }
-          description="Mirror location and availability tracking — see where each mirror is and when it is booked, without separate lists or spreadsheets."
+          description="Peilin sijainnin ja saatavuuden seuranta — näette missä kukin peili on ja milloin se on varattu, ilman erillisiä listoja tai taulukkolaskentaa."
         />
 
-        <ClickHint className="mb-6">Click a mirror to see details</ClickHint>
+        <ClickHint className="mb-6">Valitse peili nähdäksesi tiedot</ClickHint>
 
         <div className="grid gap-6 lg:grid-cols-3">
           {mirrors.map((m, i) => (
@@ -100,7 +100,7 @@ export default function MirrorInventory() {
               </div>
               <p className="mt-3 text-sm text-slate">{m.location}</p>
               <p className="mt-2 font-mono text-[10px] uppercase tracking-caps text-faint">
-                Next: {m.next}
+                Seuraavaksi: {m.next}
               </p>
             </motion.button>
           ))}
@@ -116,27 +116,26 @@ export default function MirrorInventory() {
           <div className="grid gap-8 md:grid-cols-2">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-                Selected mirror
+                Valittu peili
               </p>
               <h3 className="mt-2 font-display text-2xl font-light text-ink">
                 {active.name}
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-slate">
-                Each mirror has its own record: current location, status
-                (available, booked, in use, in maintenance), and links to calendar
-                events. The team instantly sees which mirror is free for a new
-                booking.
+                Jokaisella peilillä on oma tietue: nykyinen sijainti, tila
+                (vapaa, varattu, tapahtumassa, huollossa) ja linkitys kalenterin
+                tapahtumiin. Tiimi näkee heti, mikä peili on vapaana uuteen varaukseen.
               </p>
             </div>
             <div className="rounded-xl border border-hairline bg-cream/80 p-5">
               <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                Example timeline · {active.name}
+                Esimerkkiaikajana · {active.name}
               </p>
               <div className="mt-4 space-y-2">
                 {[
-                  { t: "14 Aug", e: "Delivery to venue" },
-                  { t: "15–16 Aug", e: "Wedding · Mäkinen" },
-                  { t: "16 Aug", e: "Return to warehouse" },
+                  { t: "14.8.", e: "Toimitus tapahtumapaikalle" },
+                  { t: "15.–16.8.", e: "Häät · Mäkinen" },
+                  { t: "16.8.", e: "Palautus varastoon" },
                 ].map((row) => (
                   <div
                     key={row.t}

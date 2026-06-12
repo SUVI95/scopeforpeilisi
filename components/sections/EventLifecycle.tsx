@@ -10,34 +10,34 @@ const ease = [0.22, 1, 0.36, 1] as const;
 type EventView = "upcoming" | "completed";
 
 const upcomingEvents = [
-  { date: "15 Aug 2026", client: "Mäkinen · wedding", mirror: "Mirror #3", stage: "Confirmed" },
-  { date: "17 Aug 2026", client: "Tech Oy · corporate", mirror: "Mirror #1", stage: "Offer open" },
-  { date: "22 Aug 2026", client: "Virtanen · birthday", mirror: "Mirror #4", stage: "Confirmed" },
-  { date: "30 Aug 2026", client: "Design Week", mirror: "Mirror #2", stage: "Confirmed" },
+  { date: "15.8.2026", client: "Mäkinen · häät", mirror: "Peili #3", stage: "Vahvistettu" },
+  { date: "17.8.2026", client: "Tech Oy · yritystilaisuus", mirror: "Peili #1", stage: "Tarjous auki" },
+  { date: "22.8.2026", client: "Virtanen · synttärit", mirror: "Peili #4", stage: "Vahvistettu" },
+  { date: "30.8.2026", client: "Design Week", mirror: "Peili #2", stage: "Vahvistettu" },
 ];
 
 const completedSample = [
-  { date: "8 Jun 2026", client: "Korhonen · birthday", mirror: "Mirror #2", stage: "Follow-up done" },
-  { date: "24 May 2026", client: "Lahti corporate gala", mirror: "Mirror #1", stage: "Invoicing done" },
-  { date: "12 May 2026", client: "Helsinki summer party", mirror: "Mirror #3", stage: "Archived" },
+  { date: "8.6.2026", client: "Korhonen · synttärit", mirror: "Peili #2", stage: "Jälkiseuranta ok" },
+  { date: "24.5.2026", client: "Lahti corporate gala", mirror: "Peili #1", stage: "Laskutus ok" },
+  { date: "12.5.2026", client: "Helsinki summer party", mirror: "Peili #3", stage: "Arkistoitu" },
 ];
 
 const flowSteps = [
   {
-    label: "Upcoming",
-    detail: "Dashboard, calendar, and pipeline show what is active or coming next.",
+    label: "Tulevat",
+    detail: "Hallintanäkymä, kalenteri ja prosessi näyttävät aktiiviset ja tulevat tapahtumat.",
   },
   {
-    label: "Event day",
-    detail: "Team works from today's view — mirrors, location, contacts at hand.",
+    label: "Tapahtumapäivä",
+    detail: "Tiimi työskentelee päivän näkymästä — peilit, paikka ja yhteystiedot käden ulottuvilla.",
   },
   {
-    label: "Done",
-    detail: "Marked complete after event + follow-up. Drops off daily views.",
+    label: "Valmis",
+    detail: "Merkitään valmiiksi tapahtuman ja jälkiseurannan jälkeen. Poistuu päivän näkymistä.",
   },
   {
-    label: "Archive",
-    detail: "Stored permanently. Searchable list — not mixed into upcoming work.",
+    label: "Arkisto",
+    detail: "Säilytetään pysyvästi. Haettava lista — ei sekoitu tuleviin töihin.",
   },
 ];
 
@@ -57,18 +57,17 @@ export default function EventLifecycle() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="03b"
-          eyebrow="Events · upcoming & done"
+          eyebrow="Tapahtumat · tulevat ja valmiit"
           title={
             <>
-              Today&apos;s work stays visible.
+              Päivän työ pysyy näkyvissä.
               <br />
-              <em className="italic text-copper">History stays findable.</em>
+              <em className="italic text-copper">Historia pysyy löydettävissä.</em>
             </>
           }
-          description="An illustrative view of how upcoming and completed events could be separated — keeping the dashboard responsive even with hundreds of past events. Exact rules are confirmed in your next meeting."
+          description="Havainnollistava näkymä siitä, miten tulevat ja valmiit tapahtumat voidaan erottaa — hallintanäkymä pysyy kevyenä, vaikka menneitä tapahtumia olisi satoja. Tarkat säännöt vahvistetaan seuraavassa tapaamisessa."
         />
 
-        {/* Flow */}
         <div className="mb-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {flowSteps.map((step, i) => (
             <motion.div
@@ -99,7 +98,6 @@ export default function EventLifecycle() {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-2">
-          {/* Interactive mock */}
           <motion.div
             initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -107,12 +105,12 @@ export default function EventLifecycle() {
             transition={{ duration: 0.8, ease }}
             className="rounded-2xl border border-hairline bg-paper p-6 shadow-card"
           >
-            <ClickHint className="mb-4">Switch view or browse the archive</ClickHint>
+            <ClickHint className="mb-4">Vaihda näkymää tai selaa arkistoa</ClickHint>
             <div className="flex gap-2">
               {(
                 [
-                  ["upcoming", "Upcoming"],
-                  ["completed", "Completed"],
+                  ["upcoming", "Tulevat"],
+                  ["completed", "Valmiit"],
                 ] as const
               ).map(([id, label]) => (
                 <button
@@ -136,7 +134,7 @@ export default function EventLifecycle() {
             {view === "upcoming" ? (
               <div className="mt-5">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                  Default view · next 30 days
+                  Oletusnäkymä · seuraavat 30 päivää
                 </p>
                 <div className="mt-3 space-y-2">
                   {upcomingEvents.map((e) => (
@@ -155,20 +153,20 @@ export default function EventLifecycle() {
                   ))}
                 </div>
                 <p className="mt-4 text-xs text-faint">
-                  Calendar and dashboard default to this — only what the team needs now.
+                  Kalenteri ja hallintanäkymä lähtevät tästä — vain se, mitä tiimi tarvitsee nyt.
                 </p>
               </div>
             ) : (
               <div className="mt-5">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                  Event archive · search & filter
+                  Tapahtuma-arkisto · haku ja suodatus
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <input
                     type="search"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search past events..."
+                    placeholder="Hae menneitä tapahtumia..."
                     className="min-w-[140px] flex-1 rounded-lg border border-hairline bg-cream px-3 py-2 text-xs text-ink placeholder:text-faint focus:border-copper/40 focus:outline-none"
                   />
                   {["2024", "2025", "2026"].map((y) => (
@@ -204,7 +202,7 @@ export default function EventLifecycle() {
                 </div>
                 <div className="mt-4 flex items-center justify-between border-t border-hairline pt-4">
                   <p className="font-mono text-[10px] text-faint">
-                    Showing 1–{pageSize} of {completedTotal}
+                    Näytetään 1–{pageSize} / {completedTotal}
                   </p>
                   <div className="flex gap-1">
                     {["←", "→"].map((arrow) => (
@@ -221,7 +219,6 @@ export default function EventLifecycle() {
             )}
           </motion.div>
 
-          {/* Brainstorm notes */}
           <div className="flex flex-col gap-4">
             <motion.div
               initial={{ opacity: 0, x: 16 }}
@@ -231,35 +228,35 @@ export default function EventLifecycle() {
               className="rounded-2xl border border-copper/20 bg-copper-wash/30 p-6"
             >
               <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-                Where hundreds of done events go
+                Minne sadat valmiit tapahtumat menevät
               </p>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate">
                 <li className="flex gap-3">
                   <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-copper" />
                   <span>
-                    <strong className="font-normal text-ink">Not on the dashboard</strong> — only
-                    a count and a link, e.g. &quot;247 completed events&quot;
+                    <strong className="font-normal text-ink">Ei hallintanäkymään</strong> — vain
+                    lukumäärä ja linkki, esim. &quot;247 valmista tapahtumaa&quot;
                   </span>
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-copper" />
                   <span>
-                    <strong className="font-normal text-ink">Dedicated archive list</strong> — search,
-                    filter by year or customer, 50 per page
+                    <strong className="font-normal text-ink">Oma arkistolista</strong> — haku,
+                    suodatus vuoden tai asiakkaan mukaan, 50 kerrallaan
                   </span>
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-copper" />
                   <span>
-                    <strong className="font-normal text-ink">On the customer record</strong> — full
-                    history for that client, past and future together
+                    <strong className="font-normal text-ink">Asiakaskortilla</strong> — koko
+                    historia kyseiselle asiakkaalle, menneet ja tulevat yhdessä
                   </span>
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-copper" />
                   <span>
-                    <strong className="font-normal text-ink">Calendar toggle</strong> — &quot;Show past
-                    events&quot; off by default so the week view stays clean
+                    <strong className="font-normal text-ink">Kalenterin kytkin</strong> — &quot;Näytä
+                    menneet&quot; oletuksena pois, jotta viikkonäkymä pysyy siistinä
                   </span>
                 </li>
               </ul>
@@ -273,12 +270,13 @@ export default function EventLifecycle() {
               className="rounded-2xl border border-hairline bg-paper p-6 shadow-card"
             >
               <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                When does an event move to &quot;done&quot;?
+                Milloin tapahtuma siirtyy &quot;valmiiksi&quot;?
               </p>
               <p className="mt-3 text-sm leading-relaxed text-slate">
-                Options to discuss in your next meeting — for example: manually when the team marks
-                follow-up complete, automatically after the event date plus a set number of days, or
-                when invoicing is marked done. Nothing is deleted; it just leaves the active views.
+                Vaihtoehtoja sovitaan seuraavassa tapaamisessa — esimerkiksi manuaalisesti kun tiimi
+                merkitsee jälkiseurannan valmiiksi, automaattisesti tapahtumapäivän jälkeen tietyn
+                määrän päiviä, tai kun laskutus on merkitty hoidetuksi. Mitään ei poisteta; se vain
+                poistuu aktiivisista näkymistä.
               </p>
             </motion.div>
 
@@ -289,8 +287,8 @@ export default function EventLifecycle() {
               transition={{ duration: 0.7, delay: 0.15, ease }}
               className="rounded-xl border border-hairline bg-cream/80 px-5 py-4 text-xs leading-relaxed text-faint"
             >
-              Illustrative only — archive rules, retention, and export needs can be added or
-              changed when we define the scope together.
+              Havainnollistava — arkistosäännöt, säilytys ja vientitarpeet voidaan lisätä tai
+              muuttaa, kun määrittelemme laajuuden yhdessä.
             </motion.div>
           </div>
         </div>

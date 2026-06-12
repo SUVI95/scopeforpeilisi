@@ -10,39 +10,39 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const customers = [
   {
     id: "maki",
-    name: "Mäkinen · Wedding",
+    name: "Mäkinen · Häät",
     contact: "Anna Mäkinen",
     email: "anna.maki@example.fi",
     phone: "+358 40 123 4567",
-    tags: ["Wedding", "Helsinki"],
+    tags: ["Häät", "Helsinki"],
     activity: [
-      { when: "12 Jun", what: "Quote accepted" },
-      { when: "10 Jun", what: "Call · Mirror XL" },
-      { when: "8 Jun", what: "Enquiry via website form" },
+      { when: "12.6.", what: "Tarjous hyväksytty" },
+      { when: "10.6.", what: "Puhelu · Peili XL" },
+      { when: "8.6.", what: "Yhteydenotto verkkolomakkeella" },
     ],
   },
   {
     id: "tech",
-    name: "Tech Oy · Corporate event",
+    name: "Tech Oy · Yritystilaisuus",
     contact: "Jari Virtanen",
     email: "jari@tech.fi",
     phone: "+358 50 987 6543",
-    tags: ["Corporate", "Espoo"],
+    tags: ["Yritys", "Espoo"],
     activity: [
-      { when: "11 Jun", what: "Quote sent" },
-      { when: "9 Jun", what: "Email enquiry" },
+      { when: "11.6.", what: "Tarjous lähetetty" },
+      { when: "9.6.", what: "Sähköpostiyhteydenotto" },
     ],
   },
   {
     id: "korh",
-    name: "Korhonen · Birthday",
+    name: "Korhonen · Synttärit",
     contact: "Liisa Korhonen",
     email: "liisa@example.fi",
     phone: "+358 44 555 1212",
-    tags: ["Birthday", "Vantaa"],
+    tags: ["Synttärit", "Vantaa"],
     activity: [
-      { when: "5 Jun", what: "Event delivered" },
-      { when: "1 Jun", what: "Reminder sent automatically" },
+      { when: "5.6.", what: "Tapahtuma toimitettu" },
+      { when: "1.6.", what: "Muistutus lähetetty automaattisesti" },
     ],
   },
 ];
@@ -64,15 +64,15 @@ export default function CustomerCrm() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           index="02"
-          eyebrow="Customer records"
+          eyebrow="Asiakastiedot"
           title={
             <>
-              All customer data
+              Kaikki asiakastiedot
               <br />
-              <em className="italic text-copper">in one place.</em>
+              <em className="italic text-copper">yhdessä paikassa.</em>
             </>
           }
-          description="Customer and contact management with search and activity history — no more information scattered across messages and notes."
+          description="Asiakkaiden ja yhteyshenkilöiden hallinta, haku ja tapahtumahistoria — tieto ei hajoa viesteihin ja muistiinpanoihin."
         />
 
         <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
@@ -85,15 +85,15 @@ export default function CustomerCrm() {
           >
             <div className="mt-2 flex items-center justify-between gap-2">
               <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                Customer list
+                Asiakasluettelo
               </p>
-              <ClickHint>Select a customer</ClickHint>
+              <ClickHint>Valitse asiakas</ClickHint>
             </div>
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search customer or contact..."
+              placeholder="Hae asiakasta tai yhteyshenkilöä..."
               className="mt-4 w-full rounded-xl border border-hairline bg-cream px-4 py-3 text-sm text-ink placeholder:text-faint focus:border-copper/40 focus:outline-none"
             />
             <div className="mt-4 flex flex-col gap-2">
@@ -123,7 +123,7 @@ export default function CustomerCrm() {
             className="rounded-2xl border border-hairline bg-paper p-7 shadow-card md:p-8"
           >
             <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-              Customer record
+              Asiakaskortti
             </p>
             <h3 className="mt-2 font-display text-2xl font-light text-ink">
               {active.name}
@@ -132,25 +132,25 @@ export default function CustomerCrm() {
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <div className="rounded-lg border border-hairline bg-cream/80 px-4 py-3">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                  Contact person
+                  Yhteyshenkilö
                 </p>
                 <p className="mt-1 text-sm text-ink">{active.contact}</p>
               </div>
               <div className="rounded-lg border border-hairline bg-cream/80 px-4 py-3">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                  Email
+                  Sähköposti
                 </p>
                 <p className="mt-1 text-sm text-ink">{active.email}</p>
               </div>
               <div className="rounded-lg border border-hairline bg-cream/80 px-4 py-3">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                  Phone
+                  Puhelin
                 </p>
                 <p className="mt-1 text-sm text-ink">{active.phone}</p>
               </div>
               <div className="rounded-lg border border-hairline bg-cream/80 px-4 py-3">
                 <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-                  Tags
+                  Tunnisteet
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {active.tags.map((t) => (
@@ -167,7 +167,7 @@ export default function CustomerCrm() {
 
             <div className="mt-8 border-t border-hairline pt-6">
               <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-                Activity history
+                Tapahtumahistoria
               </p>
               <ul className="mt-4 flex flex-col gap-3">
                 {active.activity.map((a) => (
