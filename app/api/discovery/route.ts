@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
+import { notifyDiscoveryComplete } from "@/lib/discovery-notify";
 
 type AnswerPayload = {
   sessionId?: string;
@@ -12,6 +13,64 @@ type AnswerPayload = {
   respondentName?: string;
   respondentEmail?: string;
 };
+
+export async function GET(request: NextRequest) {
+  const sessionId = request.nextUrl.searchParams.get("sessionId");
+  if (!sessionId) {
+    return NextResponse.json({ error: "Puuttuva sessionId" }, { status: 400 });
+  }
+
+  const db = getDb();
+  if (!db) {
+    return NextResponse.json(
+      { error: "Tietokantaa ei ole kytketty" },
+      { status: 503 }
+    );
+  }
+
+  try {
+    const sessions = await db`
+      SELECT id, completed, updated_at
+      FROM discovery_sessions
+      WHERE id = ${sessionId}::uuid
+    `;
+
+    if (sessions.length === 0) {
+      return NextResponse.json({ error: "Istuntoa ei löydy" }, { status: 404 });
+    }
+
+    const rows = await db`
+      SELECT question_id, answer_text
+      FROM discovery_answers
+      WHERE session_id = ${sessionId}::uuid
+      ORDER BY updated_at ASC
+    `;
+
+    const answers = Object.fromEntries(
+      (rows as { question_id: string; answer_text: string }[]).map((row) => [
+        row.question_id,
+        row.answer_text,
+      ])
+    );
+
+    const session = sessions[0] as {
+      id: string;
+      completed: boolean;
+      updated_at: string;
+    };
+
+    return NextResponse.json({
+      sessionId: session.id,
+      completed: session.completed,
+      updatedAt: session.updated_at,
+      answers,
+      answerCount: Object.keys(answers).length,
+    });
+  } catch (err) {
+    console.error("Discovery fetch session error:", err);
+    return NextResponse.json({ error: "Haku epäonnistui" }, { status: 500 });
+  }
+}
 
 export async function POST(request: NextRequest) {
   const db = getDb();
@@ -45,7 +104,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Puuttuvia kenttiä" }, { status: 400 });
   }
 
-  // Store answer exactly as typed — no trimming beyond what client sent in payload
   const answerText = answer;
 
   try {
@@ -107,6 +165,21 @@ export async function POST(request: NextRequest) {
         answer_text = EXCLUDED.answer_text,
         updated_at = NOW()
     `;
+
+    if (completed) {
+      const countRows = await db`
+        SELECT COUNT(*)::int AS count
+        FROM discovery_answers
+        WHERE session_id = ${activeSessionId}::uuid
+      `;
+      const answerCount = (countRows[0] as { count: number }).count;
+
+      notifyDiscoveryComplete({
+        sessionId: activeSessionId,
+        answerCount,
+        completed: true,
+      }).catch((err) => console.error("Discovery notify error:", err));
+    }
 
     return NextResponse.json({ sessionId: activeSessionId, saved: true });
   } catch (err) {

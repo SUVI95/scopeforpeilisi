@@ -1,9 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ClickHint from "@/components/ui/ClickHint";
+import {
+  clearSessionId,
+  getLocalAnswer,
+  getPendingAnswers,
+  getSessionId,
+  markAnswerSynced,
+  setSessionId,
+  storeLocalAnswer,
+} from "@/lib/discovery-client-store";
+import { saveAnswerWithRetry, type SaveAnswerPayload } from "@/lib/discovery-save";
 import {
   discoverySections,
   flatQuestions,
@@ -11,18 +21,26 @@ import {
 } from "@/lib/discovery-questions";
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const SESSION_KEY = "peilisi_discovery_session";
 
 type Phase = "intro" | "questions" | "done";
+
+type SessionState = {
+  completed: boolean;
+  answers: Record<string, string>;
+};
 
 export default function DiscoveryForm() {
   const [phase, setPhase] = useState<Phase>("intro");
   const [step, setStep] = useState(0);
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [sessionId, setSessionIdState] = useState<string | null>(null);
+  const [savedAnswers, setSavedAnswers] = useState<Record<string, string>>({});
   const [answer, setAnswer] = useState("");
   const [saving, setSaving] = useState(false);
+  const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showSectionIntro, setShowSectionIntro] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
+  const lastSavedAnswerRef = useRef("");
 
   const current = flatQuestions[step];
   const currentSection = useMemo(
@@ -31,15 +49,128 @@ export default function DiscoveryForm() {
   );
 
   const isFirstInSection =
-    current && flatQuestions.findIndex((q) => q.id === current.id) ===
+    current &&
+    flatQuestions.findIndex((q) => q.id === current.id) ===
       flatQuestions.findIndex((q) => q.sectionId === current.sectionId);
 
-  const progress = phase === "questions" ? ((step + 1) / totalQuestionCount) * 100 : 0;
+  const progress =
+    phase === "questions" ? ((step + 1) / totalQuestionCount) * 100 : 0;
+
+  const persistToServer = useCallback(
+    async (payload: SaveAnswerPayload, retryWithoutSession = true) => {
+      let result = await saveAnswerWithRetry(payload);
+
+      if (!result.ok && result.sessionNotFound && retryWithoutSession) {
+        clearSessionId();
+        result = await saveAnswerWithRetry({ ...payload, sessionId: undefined });
+      }
+
+      if (result.ok) {
+        setSessionId(result.sessionId);
+        setSessionIdState(result.sessionId);
+        markAnswerSynced(payload.questionId);
+        setSavedAnswers((prev) => ({
+          ...prev,
+          [payload.questionId]: payload.answer,
+        }));
+      }
+
+      return result;
+    },
+    []
+  );
+
+  const syncPending = useCallback(
+    async (knownSessionId?: string | null) => {
+      const pending = getPendingAnswers();
+      if (pending.length === 0) return knownSessionId ?? getSessionId();
+
+      setSyncing(true);
+      let activeSession = knownSessionId ?? getSessionId();
+
+      try {
+        for (const item of pending) {
+          const result = await persistToServer(
+            {
+              sessionId: activeSession ?? undefined,
+              questionId: item.questionId,
+              sectionId: item.sectionId,
+              sectionTitle: item.sectionTitle,
+              questionText: item.questionText,
+              answer: item.answer,
+              completed: false,
+            },
+            true
+          );
+
+          if (!result.ok) {
+            setError(
+              `${result.error} Vastaukset ovat tallessa selaimessasi — yritämme tallentaa uudelleen.`
+            );
+            break;
+          }
+
+          activeSession = result.sessionId;
+        }
+      } finally {
+        setSyncing(false);
+      }
+
+      return activeSession;
+    },
+    [persistToServer]
+  );
+
+  const loadSession = useCallback(async () => {
+    const stored = getSessionId();
+    if (!stored) {
+      setHydrated(true);
+      return;
+    }
+
+    setSessionIdState(stored);
+
+    try {
+      const res = await fetch(`/api/discovery?sessionId=${encodeURIComponent(stored)}`);
+      if (res.ok) {
+        const data = (await res.json()) as SessionState & {
+          sessionId: string;
+          answerCount: number;
+        };
+        setSavedAnswers(data.answers ?? {});
+
+        if (data.completed) {
+          setPhase("done");
+        } else if (data.answerCount > 0) {
+          const firstUnanswered = flatQuestions.findIndex(
+            (q) => !(q.id in (data.answers ?? {}))
+          );
+          setPhase("questions");
+          setStep(firstUnanswered === -1 ? totalQuestionCount - 1 : firstUnanswered);
+        }
+      } else if (res.status === 404) {
+        clearSessionId();
+        setSessionIdState(null);
+      }
+    } catch {
+      // Offline or server error — local backup still available
+    }
+
+    await syncPending(stored);
+    setHydrated(true);
+  }, [syncPending]);
 
   useEffect(() => {
-    const stored = localStorage.getItem(SESSION_KEY);
-    if (stored) setSessionId(stored);
-  }, []);
+    loadSession();
+  }, [loadSession]);
+
+  useEffect(() => {
+    if (phase !== "questions" || !current || !hydrated) return;
+    const existing =
+      savedAnswers[current.id] ?? getLocalAnswer(current.id) ?? "";
+    setAnswer(existing);
+    lastSavedAnswerRef.current = existing;
+  }, [step, phase, hydrated, current, savedAnswers]);
 
   useEffect(() => {
     if (phase === "questions" && isFirstInSection) {
@@ -47,20 +178,38 @@ export default function DiscoveryForm() {
     }
   }, [step, phase, isFirstInSection]);
 
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      const dirty =
+        phase === "questions" &&
+        answer.trim() !== lastSavedAnswerRef.current.trim();
+      if (dirty) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [phase, answer]);
+
   const saveAnswer = useCallback(
-    async (
-      text: string,
-      opts?: { completed?: boolean }
-    ) => {
+    async (text: string, opts?: { completed?: boolean }) => {
       if (!current) return null;
+
+      storeLocalAnswer({
+        questionId: current.id,
+        sectionId: current.sectionId,
+        sectionTitle: current.sectionTitle,
+        questionText: current.text,
+        answer: text,
+      });
+
       setSaving(true);
       setError(null);
 
       try {
-        const res = await fetch("/api/discovery", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+        const result = await persistToServer(
+          {
             sessionId: sessionId ?? undefined,
             questionId: current.id,
             sectionId: current.sectionId,
@@ -68,25 +217,24 @@ export default function DiscoveryForm() {
             questionText: current.text,
             answer: text,
             completed: opts?.completed ?? false,
-          }),
-        });
+          },
+          true
+        );
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error ?? "Tallennus epäonnistui");
-
-        if (data.sessionId && !sessionId) {
-          localStorage.setItem(SESSION_KEY, data.sessionId);
-          setSessionId(data.sessionId);
+        if (!result.ok) {
+          setError(
+            `${result.error} Vastaus on varmuuskopioitu selaimeen — yritä uudelleen tai odota hetki.`
+          );
+          return null;
         }
-        return data.sessionId as string;
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Tallennus epäonnistui");
-        return null;
+
+        lastSavedAnswerRef.current = text;
+        return result.sessionId;
       } finally {
         setSaving(false);
       }
     },
-    [current, sessionId]
+    [current, sessionId, persistToServer]
   );
 
   const handleStartQuestions = () => {
@@ -119,6 +267,11 @@ export default function DiscoveryForm() {
     } else {
       setPhase("done");
     }
+  };
+
+  const handleRetrySync = () => {
+    setError(null);
+    syncPending(sessionId);
   };
 
   return (
@@ -169,6 +322,10 @@ export default function DiscoveryForm() {
                   <p className="mt-4 text-sm text-faint">
                     {totalQuestionCount} kysymystä · arvioitu kesto 10–15 minuuttia
                   </p>
+                  <p className="mt-3 text-xs text-faint">
+                    Jokainen vastaus tallennetaan heti sekä tietokantaan että
+                    selaimen varmuuskopioon.
+                  </p>
                   <ClickHint className="mt-6 justify-center">
                     Klikkaa aloittaaksesi
                   </ClickHint>
@@ -216,15 +373,33 @@ export default function DiscoveryForm() {
                     className="mt-6 w-full resize-none rounded-xl border border-hairline bg-cream px-4 py-4 text-sm leading-relaxed text-ink placeholder:text-faint focus:border-copper/40 focus:outline-none"
                   />
 
-                  {error && (
-                    <p className="mt-3 text-sm text-copper">{error}</p>
+                  {(error || syncing) && (
+                    <div className="mt-3 space-y-2">
+                      {error && (
+                        <p className="text-sm text-copper">{error}</p>
+                      )}
+                      {syncing && (
+                        <p className="text-xs text-faint">
+                          Synkronoidaan varmuuskopioituja vastauksia…
+                        </p>
+                      )}
+                      {error && (
+                        <button
+                          type="button"
+                          onClick={handleRetrySync}
+                          className="cursor-pointer text-xs text-copper underline-offset-2 hover:underline"
+                        >
+                          Yritä tallentaa uudelleen
+                        </button>
+                      )}
+                    </div>
                   )}
 
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <button
                       type="button"
                       onClick={handleSkip}
-                      disabled={saving}
+                      disabled={saving || syncing}
                       className="cursor-pointer text-xs text-faint transition-colors hover:text-slate disabled:opacity-50"
                     >
                       Ohita
@@ -242,10 +417,10 @@ export default function DiscoveryForm() {
                       <button
                         type="button"
                         onClick={handleNext}
-                        disabled={saving || !answer.trim()}
+                        disabled={saving || syncing || !answer.trim()}
                         className="cursor-pointer rounded-full border border-copper/30 bg-copper-wash px-8 py-3 text-sm text-ink transition-all hover:border-copper disabled:cursor-not-allowed disabled:opacity-40"
                       >
-                        {saving
+                        {saving || syncing
                           ? "Tallennetaan..."
                           : step < totalQuestionCount - 1
                             ? "Seuraava"
@@ -275,9 +450,14 @@ export default function DiscoveryForm() {
                     vastaukset kokonaisuudessaan, jotta keskustelu perustuu
                     teidän antamiinne tietoihin.
                   </p>
+                  {sessionId && (
+                    <p className="mt-5 font-mono text-[10px] text-faint">
+                      Vahvistus: {sessionId.slice(0, 8)}…
+                    </p>
+                  )}
                   <p className="mt-6 text-xs text-faint">
-                    Voitte palata myöhemmin ja jatkaa samasta selaimesta;
-                    vastaukset tallentuvat samaan istuntoon.
+                    Voitte palata myöhemmin samalla selaimella; vastaukset
+                    tallentuvat samaan istuntoon.
                   </p>
                 </motion.div>
               )}
@@ -286,7 +466,8 @@ export default function DiscoveryForm() {
         </div>
 
         <p className="mt-6 text-center text-xs text-faint">
-          Vastaukset tallennetaan turvallisesti. Vain HSBridge-tiimi näkee ne.
+          Vastaukset tallennetaan turvallisesti tietokantaan ja selaimen
+          varmuuskopioon. Vain HSBridge-tiimi näkee ne.
         </p>
       </div>
     </section>
