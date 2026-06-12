@@ -1,0 +1,49 @@
+import type { Metadata, Viewport } from "next";
+import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
+import "./globals.css";
+
+const display = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const sans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "Peilisi — Platform Proposal",
+  description:
+    "A tailored internal management platform for Peilisi — customers, events, mirrors, automations, and email in one place.",
+  robots: { index: false, follow: false },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#FDF9FB",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+      <body className="font-sans bg-cream text-ink">{children}</body>
+    </html>
+  );
+}
