@@ -100,6 +100,19 @@ export default function Footer() {
             </div>
           </div>
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="mt-6 text-xs text-faint"
+        >
+          Built by Suvi Soppinen{" "}
+          <span className="text-copper" aria-hidden>
+            ♥
+          </span>
+        </motion.p>
       </div>
     </footer>
   );
