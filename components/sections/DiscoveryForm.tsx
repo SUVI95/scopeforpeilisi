@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 import {
   discoverySections,
   flatQuestions,
@@ -168,6 +169,9 @@ export default function DiscoveryForm() {
                   <p className="mt-4 text-sm text-faint">
                     {totalQuestionCount} kysymystä · arvioitu kesto 10–15 minuuttia
                   </p>
+                  <ClickHint className="mt-6 justify-center">
+                    Klikkaa aloittaaksesi
+                  </ClickHint>
                   <button
                     type="button"
                     onClick={handleStartQuestions}

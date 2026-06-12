@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -13,7 +14,7 @@ const stages = [
     short: "New enquiry",
     detail:
       "A customer reaches out via the website form, email, or phone. Details are saved to the CRM and appear in the team queue.",
-    example: "Wedding · Tuike M. · 15 Aug 2026",
+    example: "Wedding · Anna M. · 15 Aug 2026",
     color: "bg-sand text-ink border-hairline",
   },
   {
@@ -84,6 +85,7 @@ export default function WorkflowPipeline() {
           description="An illustrative view of event and booking status across the journey — stages and fields can be adjusted when we meet."
         />
 
+        <ClickHint className="mb-4 hidden md:flex">Click a stage to explore</ClickHint>
         <div className="mb-10 hidden md:block">
           <div className="relative flex items-center justify-between">
             <div className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-hairline" />

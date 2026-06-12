@@ -3,26 +3,9 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
-
-const flowSteps = [
-  {
-    step: "1",
-    title: "Something happens",
-    detail: "An event is tomorrow, a form arrives, or a quote sits unanswered.",
-  },
-  {
-    step: "2",
-    title: "The platform notices",
-    detail: "A rule you agreed on matches — date, status, or form submission.",
-  },
-  {
-    step: "3",
-    title: "Email sends automatically",
-    detail: "The right person receives a message — no one has to remember to send it.",
-  },
-];
 
 type EmailPreview = {
   to: string;
@@ -191,16 +174,6 @@ function AutomationIcon({ paths }: { paths: string[] }) {
   );
 }
 
-function FlowArrow() {
-  return (
-    <div className="hidden shrink-0 items-center justify-center md:flex" aria-hidden>
-      <svg width="28" height="12" viewBox="0 0 28 12" fill="none" className="text-copper/50">
-        <path d="M0 6h22M22 6l-5-4M22 6l-5 4" stroke="currentColor" strokeWidth="1.2" />
-      </svg>
-    </div>
-  );
-}
-
 function EmailMock({
   preview,
   compact = false,
@@ -250,29 +223,10 @@ function EmailMock({
         </p>
         {!compact && (
           <p className="mt-4 rounded-lg border border-copper/15 bg-copper-wash/30 px-3 py-2 text-[10px] text-slate">
-            Automated — sent by the platform when the trigger fires. Wording is editable; Peilisi supplies the copy.
+            Illustrative example — final wording supplied by Peilisi.
           </p>
         )}
       </div>
-    </div>
-  );
-}
-
-function TimelineStrip({ steps }: { steps: string[] }) {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      {steps.map((step, i) => (
-        <span key={step} className="flex items-center gap-2">
-          <span className="rounded-full border border-hairline bg-cream px-3 py-1 text-[10px] text-slate">
-            {step}
-          </span>
-          {i < steps.length - 1 && (
-            <span className="text-faint" aria-hidden>
-              →
-            </span>
-          )}
-        </span>
-      ))}
     </div>
   );
 }
@@ -294,51 +248,13 @@ export default function AutomationsSpotlight() {
           eyebrow="Automations & email"
           title={
             <>
-              When something happens,
+              Examples of the emails
               <br />
-              <em className="italic text-copper">the right email goes out.</em>
+              <em className="italic text-copper">your platform can send.</em>
             </>
           }
-          description="Email automation means the platform sends a message when a defined event occurs — without anyone having to remember. Below is how it works, what it looks like in an inbox, and who builds what."
+          description="Illustrative previews only — team notifications and customer messages. Wording and scope are confirmed in your next meeting."
         />
-
-        {/* How it works */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease }}
-          className="mt-14 rounded-2xl border border-hairline bg-paper p-6 shadow-card md:p-8"
-        >
-          <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-            How email automation works
-          </p>
-          <p className="mt-2 max-w-2xl text-sm text-slate">
-            No technical background needed — this is the basic flow every automation follows.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-stretch md:gap-3">
-            {flowSteps.map((item, i) => (
-              <div key={item.step} className="flex flex-1 items-stretch gap-3 md:flex-col md:gap-0">
-                <div className="flex flex-1 flex-col rounded-xl border border-hairline bg-cream/60 p-5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-copper/30 bg-copper-wash font-mono text-xs text-copper">
-                    {item.step}
-                  </span>
-                  <p className="mt-3 text-sm font-medium text-ink">{item.title}</p>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate">{item.detail}</p>
-                </div>
-                {i < flowSteps.length - 1 && (
-                  <>
-                    <FlowArrow />
-                    <div className="flex items-center justify-center py-1 md:hidden" aria-hidden>
-                      <span className="text-copper/50">↓</span>
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        </motion.div>
 
         {/* Team vs customer email types */}
         <motion.div
@@ -346,7 +262,7 @@ export default function AutomationsSpotlight() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease }}
-          className="mt-10 grid gap-8 lg:grid-cols-2"
+          className="mt-14 grid gap-8 lg:grid-cols-2"
         >
           <div>
             <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
@@ -361,7 +277,9 @@ export default function AutomationsSpotlight() {
               inbox. Content and scope are confirmed in your next meeting.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <ClickHint>Switch type</ClickHint>
+              <div className="flex flex-wrap gap-2">
               {(["team", "customer"] as const).map((type) => (
                 <button
                   key={type}
@@ -376,6 +294,7 @@ export default function AutomationsSpotlight() {
                   {emailTypeExamples[type].label}
                 </button>
               ))}
+              </div>
             </div>
 
             <AnimatePresence mode="wait">
@@ -432,10 +351,12 @@ export default function AutomationsSpotlight() {
             Example automations · illustrative
           </p>
           <h3 className="mt-2 font-display text-2xl font-light text-ink">
-            Pick an example — see the trigger and the email
+            Pick an example — see the message
           </h3>
 
-          <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,340px)_1fr]">
+          <ClickHint className="mt-2">Pick an example below</ClickHint>
+
+          <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,340px)_1fr]">
             <div className="flex flex-col gap-2">
               {automations.map((a) => (
                 <button
@@ -463,7 +384,7 @@ export default function AutomationsSpotlight() {
                           {a.email.audience === "team" ? "Team" : "Customer"}
                         </span>
                       </div>
-                      <p className="mt-1 text-xs text-slate">{a.trigger}</p>
+                      <p className="mt-1 truncate text-xs text-slate">{a.email.subject}</p>
                     </div>
                   </div>
                 </button>
@@ -477,36 +398,11 @@ export default function AutomationsSpotlight() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.4, ease }}
-                className="space-y-5"
               >
-                <div className="rounded-xl border border-hairline bg-paper p-5">
-                  <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
-                    Trigger → action
-                  </p>
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <p className="font-mono text-[9px] text-faint">When</p>
-                      <p className="mt-1 text-sm text-ink">{current.trigger}</p>
-                    </div>
-                    <div>
-                      <p className="font-mono text-[9px] text-faint">Then</p>
-                      <p className="mt-1 text-sm text-ink">{current.action}</p>
-                    </div>
-                  </div>
-                  <div className="mt-5">
-                    <p className="font-mono text-[9px] text-faint">Flow</p>
-                    <div className="mt-2">
-                      <TimelineStrip steps={current.timeline} />
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="mb-3 font-mono text-[10px] uppercase tracking-caps text-faint">
-                    What the recipient sees
-                  </p>
-                  <EmailMock preview={current.email} />
-                </div>
+                <p className="mb-3 font-mono text-[10px] uppercase tracking-caps text-faint">
+                  {current.title}
+                </p>
+                <EmailMock preview={current.email} />
               </motion.div>
             </AnimatePresence>
           </div>

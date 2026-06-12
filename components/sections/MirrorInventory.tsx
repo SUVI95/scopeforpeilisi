@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -70,6 +71,8 @@ export default function MirrorInventory() {
           }
           description="Mirror location and availability tracking — see where each mirror is and when it is booked, without separate lists or spreadsheets."
         />
+
+        <ClickHint className="mb-6">Click a mirror to see details</ClickHint>
 
         <div className="grid gap-6 lg:grid-cols-3">
           {mirrors.map((m, i) => (

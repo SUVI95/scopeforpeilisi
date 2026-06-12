@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -85,6 +86,7 @@ export default function QuotesContracts() {
           description="Quote and contract status tracking per customer — no document creation in the platform, but a clear view of where each item stands."
         />
 
+        <ClickHint className="mb-4">Filter or select an item</ClickHint>
         <div className="mb-6 flex flex-wrap gap-2">
           {(
             [

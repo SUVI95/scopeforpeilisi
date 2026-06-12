@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -217,6 +218,8 @@ export default function Features() {
           }
           description="A summary of what we have in mind so far. Each area expands for illustration — fields can be added if something is missing, and the final design and feature set will be agreed in your next meeting."
         />
+
+        <ClickHint className="mb-6">Click any card for scope detail</ClickHint>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3 md:gap-6">
           {capabilities.map((c, i) => (

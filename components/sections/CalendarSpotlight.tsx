@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -91,6 +92,8 @@ export default function CalendarSpotlight() {
                 ))}
               </div>
             </div>
+
+            <ClickHint className="mb-4">Click an event in the week</ClickHint>
 
             <div className="flex flex-col gap-3">
               {weekEvents.map((ev, i) => (

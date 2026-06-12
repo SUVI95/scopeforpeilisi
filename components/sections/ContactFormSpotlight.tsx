@@ -35,8 +35,8 @@ export default function ContactFormSpotlight() {
             </p>
             <div className="mt-6 space-y-4">
               {[
-                { label: "Name", value: "Tuike Mäkinen" },
-                { label: "Email", value: "tuike@example.fi" },
+                { label: "Name", value: "Anna Mäkinen" },
+                { label: "Email", value: "anna.maki@example.fi" },
                 { label: "Phone", value: "+358 40 123 4567" },
                 { label: "Event type", value: "Wedding" },
                 { label: "Preferred date", value: "15 Aug 2026" },

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -10,8 +11,8 @@ const customers = [
   {
     id: "maki",
     name: "Mäkinen · Wedding",
-    contact: "Tuike Mäkinen",
-    email: "tuike@example.fi",
+    contact: "Anna Mäkinen",
+    email: "anna.maki@example.fi",
     phone: "+358 40 123 4567",
     tags: ["Wedding", "Helsinki"],
     activity: [
@@ -82,9 +83,12 @@ export default function CustomerCrm() {
             transition={{ duration: 0.8, ease }}
             className="rounded-2xl border border-hairline bg-paper p-6 shadow-card"
           >
-            <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
-              Customer list
-            </p>
+            <div className="mt-2 flex items-center justify-between gap-2">
+              <p className="font-mono text-[10px] uppercase tracking-caps text-faint">
+                Customer list
+              </p>
+              <ClickHint>Select a customer</ClickHint>
+            </div>
             <input
               type="search"
               value={query}

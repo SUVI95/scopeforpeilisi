@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -425,10 +426,15 @@ function FormPanel() {
         <button
           type="button"
           onClick={() => setSubmitted(true)}
-          className="mt-4 w-full rounded-lg border border-copper/30 bg-copper-wash py-2 text-xs text-copper transition-colors hover:border-copper"
+          className="mt-4 w-full cursor-pointer rounded-lg border border-copper/30 bg-copper-wash py-2 text-xs text-copper transition-colors hover:border-copper"
         >
           Simulate submission
         </button>
+        {!submitted && (
+          <ClickHint className="mt-3 justify-center w-full">
+            Click to see the flow
+          </ClickHint>
+        )}
       </div>
 
       <AnimatePresence mode="wait">
@@ -500,6 +506,8 @@ export default function DashboardPreview() {
           description="An illustrative preview — not a final design. Fields, layout, and workflows shown here may be added, removed, or refined. The final design and feature set will be confirmed in your next meeting."
         />
 
+        <ClickHint className="mb-6">Interactive preview — click around to explore</ClickHint>
+
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -531,7 +539,10 @@ export default function DashboardPreview() {
               <p className="font-mono text-[9px] uppercase tracking-caps text-white/30">
                 Operations
               </p>
-              <nav className="mt-6 flex flex-row gap-1 overflow-x-auto lg:flex-col lg:gap-0.5">
+              <ClickHint variant="dark" className="mt-4">
+                Try the menu tabs
+              </ClickHint>
+              <nav className="mt-3 flex flex-row gap-1 overflow-x-auto lg:flex-col lg:gap-0.5">
                 {tabs.map((t) => (
                   <button
                     key={t.id}
@@ -602,23 +613,240 @@ export default function DashboardPreview() {
           </p>
         </motion.div>
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {[
-            "Lead → offer → confirmed → event → invoicing → follow-up",
-            "Mirror inventory & availability calendar",
-            "Task reminders & team email automation",
-            "Dashboard: events, offers, utilization",
-            "Website form capture into CRM",
-          ].map((item) => (
-            <div
-              key={item}
-              className="rounded-xl border border-hairline bg-paper px-4 py-3 text-[11px] leading-relaxed text-slate"
-            >
-              {item}
-            </div>
-          ))}
-        </div>
+        <CapabilityHighlights />
       </div>
     </section>
+  );
+}
+
+const capabilityCards = [
+  {
+    id: "pipeline",
+    title: "Sales & event pipeline",
+    description: "Every customer moves through clear stages — from first contact to follow-up.",
+    href: "#pipeline",
+    span: "lg:col-span-3",
+  },
+  {
+    id: "dashboard",
+    title: "Operations dashboard",
+    description: "Events, open offers, and mirror utilization at a glance.",
+    href: "#preview",
+    span: "",
+  },
+  {
+    id: "mirrors",
+    title: "Mirror inventory & calendar",
+    description: "Which mirror is booked, free, or in transit — on a shared calendar.",
+    href: "#mirrors",
+    span: "",
+  },
+  {
+    id: "automations",
+    title: "Tasks & email automation",
+    description: "Reminders and follow-ups sent automatically when triggers fire.",
+    href: "#automations",
+    span: "",
+  },
+  {
+    id: "form",
+    title: "Website form → CRM",
+    description: "Enquiries from peilisi.fi land as customer records — no copy-paste.",
+    href: "#contact-form",
+    span: "md:col-span-2 lg:col-span-3",
+  },
+] as const;
+
+function PipelineMiniVisual() {
+  return (
+    <div className="mt-4 overflow-x-auto pb-1">
+      <div className="flex min-w-max items-center gap-1.5">
+        {pipelineStages.map((stage, i) => (
+          <span key={stage.id} className="flex items-center gap-1.5">
+            <span
+              className={`flex flex-col items-center rounded-xl border border-hairline px-3 py-2.5 ${stage.color}`}
+            >
+              <span className="flex h-5 w-5 items-center justify-center rounded-full border border-copper/20 bg-paper font-mono text-[9px] text-copper">
+                {i + 1}
+              </span>
+              <span className="mt-1.5 whitespace-nowrap text-[10px] font-medium text-ink">
+                {stage.label}
+              </span>
+            </span>
+            {i < pipelineStages.length - 1 && (
+              <svg
+                width="16"
+                height="10"
+                viewBox="0 0 16 10"
+                className="shrink-0 text-copper/40"
+                aria-hidden
+              >
+                <path
+                  d="M0 5h10M10 5l-4-3M10 5l-4 3"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  fill="none"
+                />
+              </svg>
+            )}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DashboardMiniVisual() {
+  const stats = [
+    { label: "Upcoming events", value: "12", accent: "text-ink" },
+    { label: "Open offers", value: "5", accent: "text-copper" },
+    { label: "Mirror use", value: "78%", accent: "text-verdant" },
+  ];
+  return (
+    <div className="mt-4 grid grid-cols-3 gap-2">
+      {stats.map((s) => (
+        <div
+          key={s.label}
+          className="rounded-xl border border-hairline bg-cream/80 px-2 py-3 text-center"
+        >
+          <p className={`font-display text-xl font-light ${s.accent}`}>{s.value}</p>
+          <p className="mt-1 text-[8px] leading-tight text-faint">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function MirrorsMiniVisual() {
+  const days = Array.from({ length: 14 }, (_, i) => i + 1);
+  const booked = new Set([3, 4, 8, 9, 12]);
+  return (
+    <div className="mt-4">
+      <div className="flex items-center justify-between">
+        <p className="font-mono text-[8px] uppercase tracking-caps text-faint">June</p>
+        <span className="rounded-full border border-copper/20 bg-copper-wash px-2 py-0.5 text-[8px] text-copper">
+          Mirror #3 · booked
+        </span>
+      </div>
+      <div className="mt-2 grid grid-cols-7 gap-1">
+        {days.map((d) => (
+          <span
+            key={d}
+            className={`flex h-6 items-center justify-center rounded-md text-[9px] ${
+              booked.has(d)
+                ? "border border-copper/30 bg-copper-wash font-medium text-copper"
+                : "border border-hairline bg-paper text-faint"
+            }`}
+          >
+            {d}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AutomationsMiniVisual() {
+  return (
+    <div className="mt-4 space-y-2">
+      {[
+        { tag: "Auto", text: "Reminder · Wedding tomorrow · Mirror #3" },
+        { tag: "Auto", text: "New lead · Anna Korhonen · Wedding" },
+      ].map((item) => (
+        <div
+          key={item.text}
+          className="flex items-start gap-2 rounded-xl border border-hairline bg-cream/80 px-3 py-2"
+        >
+          <span className="mt-0.5 shrink-0 rounded border border-copper/25 bg-copper-wash px-1.5 py-0.5 font-mono text-[7px] uppercase tracking-caps text-copper">
+            {item.tag}
+          </span>
+          <p className="text-[10px] leading-snug text-slate">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FormMiniVisual() {
+  return (
+    <div className="mt-4 flex items-stretch gap-2">
+      <div className="flex-1 rounded-xl border border-hairline bg-cream/80 p-3">
+        <p className="font-mono text-[7px] uppercase tracking-caps text-faint">peilisi.fi</p>
+        <div className="mt-2 space-y-1.5">
+          <div className="h-2 w-full rounded bg-hairline/80" />
+          <div className="h-2 w-4/5 rounded bg-hairline/60" />
+          <div className="h-5 w-full rounded-md border border-copper/20 bg-copper-wash/50" />
+        </div>
+      </div>
+      <div className="flex shrink-0 items-center text-copper/50" aria-hidden>
+        →
+      </div>
+      <div className="flex-1 rounded-xl border border-verdant/20 bg-verdant/5 p-3">
+        <p className="font-mono text-[7px] uppercase tracking-caps text-verdant">CRM</p>
+        <p className="mt-2 text-[10px] font-medium text-ink">Anna Korhonen</p>
+        <p className="mt-0.5 text-[9px] text-slate">Wedding · Lead · just now</p>
+      </div>
+    </div>
+  );
+}
+
+function CapabilityVisual({ id }: { id: (typeof capabilityCards)[number]["id"] }) {
+  switch (id) {
+    case "pipeline":
+      return <PipelineMiniVisual />;
+    case "dashboard":
+      return <DashboardMiniVisual />;
+    case "mirrors":
+      return <MirrorsMiniVisual />;
+    case "automations":
+      return <AutomationsMiniVisual />;
+    case "form":
+      return <FormMiniVisual />;
+  }
+}
+
+function CapabilityHighlights() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.8, ease }}
+      className="mt-10"
+    >
+      <p className="font-mono text-[10px] uppercase tracking-caps text-copper">
+        What the platform covers
+      </p>
+      <h3 className="mt-2 font-display text-2xl font-light text-ink md:text-3xl">
+        Five connected areas, one place to work
+      </h3>
+      <ClickHint className="mt-3">Click a card to jump to that section</ClickHint>
+
+      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {capabilityCards.map((card, index) => (
+          <motion.a
+            key={card.id}
+            href={card.href}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, delay: index * 0.06, ease }}
+            className={`group block rounded-2xl border border-hairline bg-paper p-5 shadow-card transition-all duration-300 hover:border-copper/30 hover:shadow-lift ${card.span}`}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <p className="font-mono text-[9px] uppercase tracking-caps text-copper">
+                0{index + 1}
+              </p>
+              <span className="text-xs text-faint transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-copper">
+                →
+              </span>
+            </div>
+            <h4 className="mt-2 font-display text-lg font-light text-ink">{card.title}</h4>
+            <p className="mt-1.5 text-xs leading-relaxed text-slate">{card.description}</p>
+            <CapabilityVisual id={card.id} />
+          </motion.a>
+        ))}
+      </div>
+    </motion.div>
   );
 }

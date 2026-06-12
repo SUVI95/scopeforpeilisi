@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -106,6 +107,7 @@ export default function EventLifecycle() {
             transition={{ duration: 0.8, ease }}
             className="rounded-2xl border border-hairline bg-paper p-6 shadow-card"
           >
+            <ClickHint className="mb-4">Switch view or browse the archive</ClickHint>
             <div className="flex gap-2">
               {(
                 [

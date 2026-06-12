@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ClickHint from "@/components/ui/ClickHint";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -153,6 +154,8 @@ export default function Delivery() {
               transition={{ duration: 1.4, delay: 0.3, ease }}
             />
           </div>
+
+          <ClickHint className="mb-6 justify-center">Click a milestone for detail</ClickHint>
 
           <div className="grid gap-10 md:grid-cols-3 md:gap-8">
             {milestones.map((m, i) => (
