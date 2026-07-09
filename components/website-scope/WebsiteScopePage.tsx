@@ -25,6 +25,7 @@ const optionA: ScopeOption = {
     "Stripe: ennakko tai kiinteät paketit (Checkout)",
     "Maksun tila näkyy CRM:ssä",
     "Yksinkertainen varaus — tiimi tarkistaa peilin ja vahvistaa päivän käsin",
+    "Domainin siirto Webnodesta",
   ],
 };
 
@@ -34,12 +35,11 @@ const optionB: ScopeOption = {
   price: "9 900 €",
   tag: "Automaatio",
   summary:
-    "Kaikki vaihtoehdosta A, plus järjestelmä hoitaa peilien saatavuuden, kalenterisynkronoinnin, domain-siirron ja sähköpostiautomaatiot. Tiimin manuaalinen koordinaatio vähenee merkittävästi.",
+    "Kaikki vaihtoehdosta A, plus järjestelmä hoitaa peilien saatavuuden, kalenterisynkronoinnin ja sähköpostiautomaatiot. Tiimin manuaalinen koordinaatio vähenee merkittävästi.",
   includes: [
     "Kaikki vaihtoehdosta A",
     "Varaus tarkistaa laitteiden saatavuuden",
     "Julkinen widget + täysi CRM-kalenterisynkronointi",
-    "Domainin siirto Webnodesta",
     "Sähköpostiautomaatiot (lomake, varaus, maksu)",
   ],
 };
