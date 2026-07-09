@@ -33,14 +33,14 @@ export default function Header() {
           : "border-b border-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-10">
-        <a href="#top" className="group flex items-baseline gap-2 cursor-pointer">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6 md:px-10">
+        <a href="#top" className="group flex shrink-0 items-baseline gap-2 cursor-pointer">
           <span className="font-display text-lg tracking-wide text-ink">Peilisi</span>
           <span className="font-mono text-[10px] uppercase tracking-caps text-slate transition-colors group-hover:text-copper">
             Alustaehdotus
           </span>
         </a>
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-5 xl:flex">
           {links.map((l) => (
             <a
               key={l.href}
@@ -51,9 +51,17 @@ export default function Header() {
             </a>
           ))}
         </nav>
-        <span className="font-mono text-[10px] uppercase tracking-caps text-faint">
-          HSBridge AI · 2026
-        </span>
+        <div className="flex shrink-0 items-center gap-3 md:gap-4">
+          <a
+            href="/scope"
+            className="cursor-pointer rounded-full border border-copper/30 bg-copper-wash px-3 py-1.5 font-mono text-[10px] uppercase tracking-caps text-copper transition-colors hover:border-copper hover:bg-copper hover:text-paper md:px-4 md:py-2 md:text-xs"
+          >
+            Verkkosivu · scope
+          </a>
+          <span className="hidden font-mono text-[10px] uppercase tracking-caps text-faint sm:inline">
+            HSBridge AI · 2026
+          </span>
+        </div>
       </div>
     </header>
   );
