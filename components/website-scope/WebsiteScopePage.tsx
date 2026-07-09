@@ -110,6 +110,9 @@ export default function WebsiteScopePage() {
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-hs-muted md:text-base">
             Kaksi vaihtoehtoa Peilisi Oy:lle. Hinnat ilman ALV:tä.
           </p>
+          <p className="mt-2 font-mono text-[10px] uppercase tracking-caps text-hs-faint">
+            Päivitetty 9.7.2026
+          </p>
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 md:gap-8">
