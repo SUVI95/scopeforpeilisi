@@ -22,7 +22,7 @@ const optionA: ScopeOption = {
     "Uusi verkkosivu (peilisi.fi)",
     "Pyydä tarjous / varaa aika -toiminto",
     "Lomake → CRM-liidi / tapahtuma",
-    "Stripe: ennakko tai kiinteät paketit (Checkout)",
+    "Stripe: ennakko",
     "Maksun tila näkyy CRM:ssä",
     "Yksinkertainen varaus — tiimi tarkistaa peilin ja vahvistaa päivän käsin",
     "Domainin siirto Webnodesta",
@@ -116,11 +116,6 @@ export default function WebsiteScopePage() {
           <OptionPanel data={optionA} manual />
           <OptionPanel data={optionB} />
         </div>
-
-        <p className="mx-auto mt-10 max-w-2xl text-center text-xs leading-relaxed text-hs-faint">
-          Juoksevat kulut (hosting, Stripe, domain, sähköposti) maksetaan suoraan palveluntarjoajille —
-          arvio noin 40–85 €/kk + domain. ALV 25,5 % lisätään kehitystyön laskulle.
-        </p>
       </main>
 
       <footer className="border-t border-hs-hairline bg-hs-ink px-6 py-12 md:px-10">
